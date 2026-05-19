@@ -2,6 +2,64 @@
 
 'use strict';
 
+// ─── Vérification de mise à jour ──────────────────────────────────────────
+
+const GITHUB_RELEASES_API =
+  'https://api.github.com/repos/quelquun667/FaciliWeb/releases/latest';
+// Délai minimum entre deux vérifications automatiques (1 heure)
+const UPDATE_CHECK_COOLDOWN = 60 * 60 * 1000;
+
+/**
+ * Vérifie si une nouvelle version est disponible sur GitHub.
+ * Stocke le résultat dans chrome.storage.local.
+ * Le cooldown évite de spammer l'API GitHub.
+ * @param {boolean} force - Ignore le cooldown (vérification manuelle depuis les paramètres).
+ */
+async function checkForUpdates(force = false) {
+  try {
+    const stored = await chrome.storage.local.get({ lastUpdateCheck: 0 });
+    if (!force && Date.now() - stored.lastUpdateCheck < UPDATE_CHECK_COOLDOWN) return;
+
+    const response = await fetch(GITHUB_RELEASES_API, {
+      headers: { 'Accept': 'application/vnd.github+json' }
+    });
+    if (!response.ok) return;
+
+    const data = await response.json();
+    const latestVersion  = (data.tag_name || '').replace(/^v/, '');
+    const currentVersion = chrome.runtime.getManifest().version;
+    const isNewer = compareVersions(latestVersion, currentVersion) > 0;
+
+    await chrome.storage.local.set({
+      lastUpdateCheck: Date.now(),
+      updateAvailable: isNewer,
+      latestVersion,
+      releaseUrl: data.html_url || ''
+    });
+
+    // Si c'est une vérification manuelle, notifie la popup via un message
+    if (force) {
+      chrome.runtime.sendMessage({ action: 'updateCheckDone', isNewer, latestVersion }).catch(() => {});
+    }
+  } catch {
+    // Réseau indisponible — on ne touche pas aux données existantes
+  }
+}
+
+/**
+ * Compare deux chaînes de version sémantique.
+ * Retourne 1 si a > b, -1 si a < b, 0 si égaux.
+ */
+function compareVersions(a, b) {
+  const pa = a.split('.').map(Number);
+  const pb = b.split('.').map(Number);
+  for (let i = 0; i < 3; i++) {
+    if ((pa[i] || 0) > (pb[i] || 0)) return 1;
+    if ((pa[i] || 0) < (pb[i] || 0)) return -1;
+  }
+  return 0;
+}
+
 // ─── Liste noire phishing ──────────────────────────────────────────────────
 
 // Liste de secours intégrée (utilisée si la mise à jour distante échoue)
@@ -127,6 +185,7 @@ chrome.runtime.onStartup.addListener(() => {
   scheduleWeeklySummary();
   schedulePhishingUpdate();
   restoreBreakTimerIfEnabled();
+  checkForUpdates(); // vérification silencieuse de mise à jour
 });
 
 /**
@@ -338,6 +397,10 @@ function levenshteinDistance(a, b) {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'getBlacklist') {
     sendResponse({ blacklist: PHISHING_FALLBACK });
+    return false;
+  }
+  if (message.action === 'checkForUpdates') {
+    checkForUpdates(true);
     return false;
   }
   if (message.action === 'startBreakTimer') {

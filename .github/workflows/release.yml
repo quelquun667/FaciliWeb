@@ -143,7 +143,7 @@ jobs:
         run: |
           ZIP="faciliweb-${{ steps.bump.outputs.version }}.zip"
           zip -r "$ZIP" \
-            _locales/ assets/ annuaire/ glossary/ guides/ help/ \
+            _locales/ assets/ annuaire/ export/ glossary/ guides/ help/ \
             onboarding/ passwords/ popup/ scripts/ shortcuts/ \
             manifest.json \
             -x "*.DS_Store"

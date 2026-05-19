@@ -1,0 +1,213 @@
+/* Page d'export avant mise à jour — FaciliWeb */
+
+:root,
+:root[data-theme="light"] {
+  --fw-bg: #f0f2f5; --fw-section: #ffffff; --fw-text: #1a1a2e;
+  --fw-text-soft: #6c757d; --fw-border: #e0e0e0;
+  --fw-input-bg: #ffffff; --fw-input-border: #c0d4f0;
+  --fw-blue: #1a5fa8; --fw-blue-dark: #0d3a6e; --fw-blue-light: #e8f0fb;
+  --fw-green: #1a7a4a; --fw-orange: #d4640a;
+  --fw-shadow: 0 4px 16px rgba(0,0,0,.1);
+  --fw-font: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --fw-bg: #15171c; --fw-section: #2a2f3a; --fw-text: #e8e8ee;
+  --fw-text-soft: #9aa0aa; --fw-border: #3a3f4a;
+  --fw-input-bg: #1f232b; --fw-input-border: #4a5060;
+  --fw-blue: #4f9ce5; --fw-blue-dark: #2a6fb0; --fw-blue-light: #1e2c45;
+  --fw-green: #5ad394; --fw-orange: #e89540;
+  --fw-shadow: 0 4px 20px rgba(0,0,0,.5);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--fw-font);
+  font-size: 16px;
+  color: var(--fw-text);
+  background: var(--fw-bg);
+  padding: 24px 16px 48px;
+  min-height: 100vh;
+}
+
+/* ─── En-tête ─── */
+.export-header {
+  max-width: 720px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, var(--fw-green), #145c38);
+  color: #fff;
+  padding: 24px 28px;
+  border-radius: 12px;
+  box-shadow: var(--fw-shadow);
+}
+
+.export-logo { font-size: 44px; }
+.export-header h1 { font-size: 22px; font-weight: 700; }
+.export-subtitle { font-size: 13px; opacity: .9; margin-top: 4px; }
+
+/* ─── Container ─── */
+.export-container {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ─── Avertissement ─── */
+.export-warning {
+  display: flex;
+  gap: 14px;
+  background: #fff9e6;
+  border-left: 4px solid #f0b429;
+  border-radius: 0 10px 10px 0;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fw-text);
+}
+
+[data-theme="dark"] .export-warning { background: #3a3020; }
+
+.warning-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+.export-warning strong { display: block; margin-bottom: 4px; }
+
+/* ─── Sections ─── */
+.export-section {
+  background: var(--fw-section);
+  border-radius: 12px;
+  padding: 22px 24px 22px 70px;
+  box-shadow: var(--fw-shadow);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.step-badge {
+  position: absolute;
+  left: 20px;
+  top: 22px;
+  width: 34px;
+  height: 34px;
+  background: var(--fw-blue);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.export-section-content { display: flex; flex-direction: column; gap: 10px; }
+
+.export-section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--fw-blue);
+}
+
+.export-section p {
+  font-size: 14px;
+  color: var(--fw-text);
+  line-height: 1.5;
+}
+
+/* ─── Formulaire ─── */
+.master-pwd-row { display: flex; flex-direction: column; gap: 6px; }
+
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fw-text);
+}
+
+.form-input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: var(--fw-font);
+  border: 2px solid var(--fw-input-border);
+  border-radius: 8px;
+  background: var(--fw-input-bg);
+  color: var(--fw-text);
+}
+
+.form-input:focus { outline: none; border-color: var(--fw-blue); }
+
+.form-help { font-size: 12px; color: var(--fw-text-soft); font-style: italic; }
+
+.input-group { display: flex; gap: 8px; }
+
+.btn-icon {
+  background: var(--fw-input-bg);
+  border: 2px solid var(--fw-input-border);
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 14px;
+  color: var(--fw-text);
+}
+
+/* ─── Boutons ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--fw-font);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity .2s;
+  width: fit-content;
+}
+
+.btn:focus { outline: 3px solid var(--fw-blue); outline-offset: 2px; }
+
+.btn-primary { background: var(--fw-blue); color: #fff; }
+.btn-primary:hover { background: var(--fw-blue-dark); }
+
+.btn-release {
+  background: var(--fw-green);
+  color: #fff;
+  font-size: 15px;
+  padding: 14px 24px;
+}
+
+.btn-release:hover { opacity: .9; }
+
+/* ─── Status ─── */
+.export-status {
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 18px;
+}
+
+/* ─── Étape 3 spécifique ─── */
+.export-section-go { border: 2px solid var(--fw-green); }
+.export-section-go .step-badge { background: var(--fw-green); }
+
+.update-install-steps {
+  font-size: 13px;
+  color: var(--fw-text-soft);
+  line-height: 1.5;
+}
+
+.update-install-steps code {
+  background: var(--fw-blue-light);
+  color: var(--fw-blue);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+}
