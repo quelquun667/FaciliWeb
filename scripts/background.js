@@ -194,7 +194,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
  * @param {string} url - L'URL du lien à analyser.
  * @param {number} tabId - L'ID de l'onglet courant.
  */
-function analyzeLinkAndNotify(url, tabId) {
+async function analyzeLinkAndNotify(url, tabId) {
   let domain = null;
   try {
     domain = new URL(url).hostname.toLowerCase();
@@ -202,15 +202,12 @@ function analyzeLinkAndNotify(url, tabId) {
     return;
   }
 
-  const isSuspicious = PHISHING_BLACKLIST.some(
-    (blocked) => domain === blocked || domain.endsWith('.' + blocked)
-  );
+  const isSuspicious = await isDomainBlacklisted(domain);
 
   const message = isSuspicious
     ? `${chrome.i18n.getMessage('linkAnalysisDanger')}\n${domain}`
     : `${chrome.i18n.getMessage('linkAnalysisSafe')}\n${domain}`;
 
-  // Envoi sécurisé : ignore les erreurs si le content script n'est pas chargé
   safeSendMessage(tabId, { action: 'showLinkAnalysis', isSuspicious, domain, message });
 }
 
@@ -340,7 +337,7 @@ function levenshteinDistance(a, b) {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'getBlacklist') {
-    sendResponse({ blacklist: PHISHING_BLACKLIST });
+    sendResponse({ blacklist: PHISHING_FALLBACK });
     return false;
   }
   if (message.action === 'startBreakTimer') {
