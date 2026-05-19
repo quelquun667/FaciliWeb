@@ -1,0 +1,79 @@
+name: Auto Tag
+
+# Crée automatiquement un tag de version sémantique à chaque push sur main
+# selon le préfixe du message de commit (Conventional Commits).
+#
+# feat:  → bump mineur  (1.0.0 → 1.1.0)
+# fix: / perf: → bump patch  (1.0.0 → 1.0.1)
+# feat!: / BREAKING CHANGE → bump majeur (1.0.0 → 2.0.0)
+# Tout autre préfixe (chore:, docs:, refactor:…) → aucun tag créé.
+
+on:
+  push:
+    branches:
+      - main
+    # N'exécute pas ce workflow si c'est le bot qui a poussé (évite les boucles)
+    paths-ignore:
+      - 'CHANGELOG.md'
+
+permissions:
+  contents: write
+
+jobs:
+  auto-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Déterminer le bump de version
+        id: bump
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%s)
+          echo "Message du commit : $COMMIT_MSG"
+
+          # Récupère le dernier tag ou démarre depuis 0.0.0
+          LATEST_TAG=$(git tag --sort=-creatordate | grep '^v[0-9]' | head -1)
+          if [ -z "$LATEST_TAG" ]; then
+            CURRENT="0.0.0"
+          else
+            CURRENT="${LATEST_TAG#v}"
+          fi
+
+          MAJOR=$(echo "$CURRENT" | cut -d. -f1)
+          MINOR=$(echo "$CURRENT" | cut -d. -f2)
+          PATCH=$(echo "$CURRENT" | cut -d. -f3)
+
+          # Analyse le type de bump selon le préfixe Conventional Commits
+          if echo "$COMMIT_MSG" | grep -qE "^feat!:|^[a-z]+(\(.+\))?!:|BREAKING CHANGE"; then
+            MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0
+            BUMP_TYPE="major"
+          elif echo "$COMMIT_MSG" | grep -qE "^feat(\(.+\))?:"; then
+            MINOR=$((MINOR + 1)); PATCH=0
+            BUMP_TYPE="minor"
+          elif echo "$COMMIT_MSG" | grep -qE "^(fix|perf)(\(.+\))?:"; then
+            PATCH=$((PATCH + 1))
+            BUMP_TYPE="patch"
+          else
+            echo "Préfixe non versionné — aucun tag créé."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          NEW_TAG="v${MAJOR}.${MINOR}.${PATCH}"
+          echo "new_tag=$NEW_TAG" >> "$GITHUB_OUTPUT"
+          echo "bump_type=$BUMP_TYPE" >> "$GITHUB_OUTPUT"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "Nouveau tag : $NEW_TAG ($BUMP_TYPE)"
+
+      - name: Créer et pousser le tag
+        if: steps.bump.outputs.skip != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "${{ steps.bump.outputs.new_tag }}"
+          git push origin "${{ steps.bump.outputs.new_tag }}"
+          echo "Tag ${{ steps.bump.outputs.new_tag }} publié."

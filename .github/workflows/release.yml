@@ -1,0 +1,148 @@
+name: Release
+
+# Déclenché automatiquement quand un tag v*.*.* est poussé (par auto-tag.yml
+# ou manuellement via `git tag v1.2.3 && git push origin v1.2.3`).
+#
+# Ce workflow :
+#   1. Met à jour la version dans manifest.json
+#   2. Génère les notes de release depuis les commits
+#   3. Met à jour CHANGELOG.md et committe les changements
+#   4. Construit le ZIP de l'extension (fichiers utiles seulement)
+#   5. Publie la release GitHub avec le ZIP en pièce jointe
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout (historique complet)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Token avec droits d'écriture pour pouvoir committer CHANGELOG
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ─── 1. Version ────────────────────────────────────────────────────────
+
+      - name: Extraire la version depuis le tag
+        id: version
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+          echo "Version : $VERSION"
+
+      - name: Mettre à jour manifest.json
+        run: |
+          jq --arg v "${{ steps.version.outputs.version }}" '.version = $v' manifest.json > manifest.tmp
+          mv manifest.tmp manifest.json
+          echo "manifest.json mis à jour → version ${{ steps.version.outputs.version }}"
+
+      # ─── 2. Changelog ──────────────────────────────────────────────────────
+
+      - name: Générer les notes de release
+        id: notes
+        run: |
+          CURRENT_TAG="${{ steps.version.outputs.tag }}"
+          PREV_TAG=$(git tag --sort=-creatordate | grep '^v[0-9]' | sed -n '2p')
+
+          if [ -z "$PREV_TAG" ]; then
+            RANGE="$CURRENT_TAG"
+            IS_FIRST=true
+          else
+            RANGE="$PREV_TAG..$CURRENT_TAG"
+            IS_FIRST=false
+          fi
+
+          echo "## [$CURRENT_TAG] — $(date +%Y-%m-%d)" > RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+
+          if [ "$IS_FIRST" = true ]; then
+            echo "_Premier release — voir [README](README.md) pour la liste complète des fonctionnalités._" >> RELEASE_NOTES.md
+          else
+            # Fonctionnalités (feat:)
+            FEATS=$(git log "$RANGE" --pretty="%s" | grep -E "^feat(\(.+\))?:" | sed -E 's/^feat(\(.+\))?: /- /')
+            # Corrections (fix: / perf:)
+            FIXES=$(git log "$RANGE" --pretty="%s" | grep -E "^(fix|perf)(\(.+\))?:" | sed -E 's/^(fix|perf)(\(.+\))?: /- /')
+            # Autres (chore: docs: refactor: style:)
+            OTHERS=$(git log "$RANGE" --pretty="%s" | grep -Ev "^(feat|fix|perf)(\(.+\))?:" | grep -v "^\[skip ci\]" | sed 's/^/- /')
+
+            if [ -n "$FEATS" ]; then
+              printf "### ✨ Nouvelles fonctionnalités\n%s\n\n" "$FEATS" >> RELEASE_NOTES.md
+            fi
+            if [ -n "$FIXES" ]; then
+              printf "### 🐛 Corrections\n%s\n\n" "$FIXES" >> RELEASE_NOTES.md
+            fi
+            if [ -n "$OTHERS" ]; then
+              printf "### 🔧 Autres changements\n%s\n\n" "$OTHERS" >> RELEASE_NOTES.md
+            fi
+          fi
+
+          cat RELEASE_NOTES.md
+
+      - name: Mettre à jour CHANGELOG.md
+        run: |
+          # Prépend la nouvelle section au début du changelog existant
+          {
+            head -6 CHANGELOG.md           # Garde l'en-tête (titre + liens)
+            echo ""
+            cat RELEASE_NOTES.md
+            echo ""
+            tail -n +7 CHANGELOG.md        # Ajoute l'historique précédent
+          } > CHANGELOG.tmp
+          mv CHANGELOG.tmp CHANGELOG.md
+
+      - name: Committer manifest.json + CHANGELOG.md
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add manifest.json CHANGELOG.md
+          # [skip ci] empêche auto-tag.yml de se déclencher sur ce commit
+          git commit -m "chore(release): ${{ steps.version.outputs.tag }} [skip ci]"
+          git push origin HEAD:main
+
+      # ─── 3. ZIP de l'extension ─────────────────────────────────────────────
+
+      - name: Construire le ZIP de l'extension
+        run: |
+          ZIP_NAME="faciliweb-${{ steps.version.outputs.version }}.zip"
+          echo "Construction de $ZIP_NAME..."
+
+          # Seuls les dossiers nécessaires au navigateur sont inclus
+          zip -r "$ZIP_NAME" \
+            _locales/ \
+            assets/ \
+            annuaire/ \
+            glossary/ \
+            guides/ \
+            help/ \
+            onboarding/ \
+            passwords/ \
+            popup/ \
+            scripts/ \
+            shortcuts/ \
+            manifest.json \
+            -x "*.DS_Store" "*.gitkeep" "*/.gitkeep"
+
+          echo "zip_name=$ZIP_NAME" >> "$GITHUB_ENV"
+          ls -lh "$ZIP_NAME"
+
+      # ─── 4. Publication GitHub Release ────────────────────────────────────
+
+      - name: Publier la release GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "FaciliWeb ${{ steps.version.outputs.tag }}"
+          body_path: RELEASE_NOTES.md
+          files: ${{ env.zip_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: false
