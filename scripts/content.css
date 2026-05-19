@@ -1,0 +1,731 @@
+/* Styles injectés par FaciliWeb dans toutes les pages web */
+
+/* ─── Variables CSS globales ─────────────────────────────────────────────── */
+:root {
+  --fw-green: #1a7a4a;
+  --fw-orange: #d4640a;
+  --fw-red: #c0392b;
+  --fw-blue: #1a5fa8;
+  --fw-white: #ffffff;
+  --fw-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  --fw-radius: 10px;
+  --fw-font: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --fw-z-base: 2147483640;
+}
+
+/* ─── Surlignage des champs ──────────────────────────────────────────────── */
+.faciliweb-field-normal {
+  outline: 3px solid var(--fw-green) !important;
+  outline-offset: 2px !important;
+}
+
+.faciliweb-field-sensitive {
+  outline: 3px solid var(--fw-orange) !important;
+  outline-offset: 2px !important;
+}
+
+/* ─── Badge CapsLock (petit indicateur collé au champ focalisé) ──────────── */
+#faciliweb-capslock-badge {
+  position: absolute;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  width: 30px;
+  height: 28px;
+  background-color: #e67e22;
+  color: #ffffff;
+  font-family: var(--fw-font);
+  font-size: 13px;
+  font-weight: 900;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: var(--fw-z-base);
+  cursor: help;
+  /* Petite animation pour attirer le regard sans être agressif */
+  animation: faciliweb-capslock-pulse 1.5s ease-in-out infinite;
+  /* L'infobulle native HTML s'affiche au survol via l'attribut `title` */
+}
+
+#faciliweb-capslock-badge.faciliweb-capslock-visible {
+  display: inline-flex;
+}
+
+.faciliweb-capslock-lock {
+  font-size: 10px;
+  line-height: 1;
+}
+
+.faciliweb-capslock-letter {
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+@keyframes faciliweb-capslock-pulse {
+  0%, 100% { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); }
+  50% { box-shadow: 0 2px 12px rgba(230, 126, 34, 0.6); }
+}
+
+/* ─── Bouton des caractères spéciaux ─────────────────────────────────────── */
+#faciliweb-special-trigger {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--fw-blue);
+  color: var(--fw-white);
+  font-family: var(--fw-font);
+  font-size: 14px;
+  font-weight: bold;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--fw-radius);
+  box-shadow: var(--fw-shadow);
+  z-index: var(--fw-z-base);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#faciliweb-special-trigger:hover,
+#faciliweb-special-trigger:focus {
+  background-color: #154d8a;
+  outline: 3px solid var(--fw-white);
+}
+
+/* ─── Panneau des caractères spéciaux ────────────────────────────────────── */
+#faciliweb-special-panel {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  background-color: #ffffff;
+  border: 3px solid #1a5fa8;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  padding: 16px 18px;
+  z-index: var(--fw-z-base);
+  width: 380px;
+  max-height: 70vh;
+  overflow-y: auto;
+  font-family: var(--fw-font);
+  display: none;
+  color: #1a1a2e;
+}
+
+#faciliweb-special-panel.faciliweb-panel-visible {
+  display: block;
+}
+
+.faciliweb-panel-title {
+  font-weight: bold;
+  font-size: 16px;
+  color: #1a5fa8;
+  margin: 0 0 4px 0;
+}
+
+.faciliweb-panel-hint {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 14px 0;
+  line-height: 1.4;
+}
+
+.faciliweb-char-group-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #1a5fa8;
+  margin: 14px 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #e8f0fb;
+}
+
+.faciliweb-char-group-title:first-of-type {
+  margin-top: 4px;
+}
+
+.faciliweb-char-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.faciliweb-char-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.faciliweb-char-btn {
+  /* Contraste fort : caractère sombre sur fond clair, bordure visible */
+  width: 100%;
+  height: 50px;
+  background-color: #f0f4ff;
+  border: 2px solid #1a5fa8;
+  border-radius: 8px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0d3a6e;
+  cursor: pointer;
+  transition: background-color 0.12s, color 0.12s, transform 0.08s;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.faciliweb-char-btn:hover,
+.faciliweb-char-btn:focus {
+  background-color: #1a5fa8;
+  color: #ffffff;
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.faciliweb-char-btn:active {
+  transform: translateY(0);
+}
+
+.faciliweb-char-hint {
+  font-size: 10px;
+  color: #555;
+  text-align: center;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+/* ─── Traducteur de jargon ───────────────────────────────────────────────── */
+.faciliweb-jargon-term {
+  border-bottom: 2px dotted var(--fw-blue);
+  cursor: help;
+  position: relative;
+  display: inline;
+}
+
+.faciliweb-jargon-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1a2a4a;
+  color: var(--fw-white);
+  font-size: 13px;
+  font-family: var(--fw-font);
+  padding: 8px 12px;
+  border-radius: 8px;
+  width: 220px;
+  z-index: var(--fw-z-base);
+  box-shadow: var(--fw-shadow);
+  pointer-events: none;
+  line-height: 1.4;
+}
+
+.faciliweb-jargon-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1a2a4a;
+}
+
+.faciliweb-jargon-term:hover .faciliweb-jargon-tooltip,
+.faciliweb-jargon-term:focus .faciliweb-jargon-tooltip {
+  display: block;
+}
+
+/* ─── Overlay Zone de Danger ─────────────────────────────────────────────── */
+#faciliweb-danger-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(150, 0, 0, 0.92);
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fw-font);
+}
+
+.faciliweb-danger-box {
+  background-color: var(--fw-white);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 540px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+.faciliweb-danger-icon {
+  font-size: 60px;
+  margin-bottom: 12px;
+}
+
+.faciliweb-danger-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--fw-red);
+  margin: 0 0 16px 0;
+}
+
+.faciliweb-danger-message {
+  font-size: 16px;
+  color: #333;
+  margin: 0 0 10px 0;
+  line-height: 1.5;
+}
+
+.faciliweb-danger-domain {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--fw-red);
+  margin: 0 0 24px 0;
+  word-break: break-all;
+}
+
+.faciliweb-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: var(--fw-font);
+  border: none;
+  border-radius: var(--fw-radius);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.faciliweb-btn:hover {
+  opacity: 0.85;
+}
+
+.faciliweb-btn-safe {
+  background-color: var(--fw-green);
+  color: var(--fw-white);
+}
+
+.faciliweb-btn-danger {
+  background-color: #bbb;
+  color: #444;
+  font-size: 13px;
+}
+
+/* ─── Indicateur de force du mot de passe ────────────────────────────────── */
+#faciliweb-strength-widget {
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 6px 10px;
+  z-index: var(--fw-z-base);
+  font-family: var(--fw-font);
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  display: none;
+  min-width: 160px;
+}
+
+#faciliweb-strength-widget.faciliweb-strength-visible {
+  display: block;
+}
+
+.faciliweb-strength-bar {
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.faciliweb-strength-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  transition: width 0.25s, background 0.25s;
+}
+
+.faciliweb-strength-label {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+/* ─── Vérificateur de pièce jointe ───────────────────────────────────────── */
+.faciliweb-dangerous-link {
+  text-decoration: underline wavy var(--fw-orange) !important;
+  text-underline-offset: 3px !important;
+}
+
+.faciliweb-attachment-badge {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 0.9em;
+  cursor: help;
+  vertical-align: middle;
+}
+
+#faciliweb-attachment-tooltip {
+  position: absolute;
+  z-index: var(--fw-z-base);
+  width: 280px;
+  background-color: var(--fw-white);
+  border-radius: var(--fw-radius);
+  box-shadow: var(--fw-shadow);
+  padding: 12px 14px;
+  font-family: var(--fw-font);
+  font-size: 13px;
+  color: #1a1a2e;
+  line-height: 1.45;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+#faciliweb-attachment-tooltip[aria-hidden="false"] {
+  opacity: 1;
+}
+
+#faciliweb-attachment-tooltip.faciliweb-tooltip-high {
+  border: 2px solid var(--fw-red);
+  background-color: #fff5f5;
+}
+
+#faciliweb-attachment-tooltip.faciliweb-tooltip-medium {
+  border: 2px solid var(--fw-orange);
+  background-color: #fffaf0;
+}
+
+.faciliweb-tooltip-header {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--fw-red);
+}
+
+#faciliweb-attachment-tooltip.faciliweb-tooltip-medium .faciliweb-tooltip-header {
+  color: var(--fw-orange);
+}
+
+.faciliweb-tooltip-body {
+  margin: 0 0 6px 0;
+}
+
+.faciliweb-tooltip-advice {
+  margin: 0;
+  font-style: italic;
+  color: #555;
+}
+
+/* ─── Auto-complétion d'identifiants ─────────────────────────────────────── */
+#faciliweb-autofill-suggestion {
+  position: absolute;
+  background-color: #ffffff;
+  border: 2px solid var(--fw-blue);
+  border-radius: 10px;
+  box-shadow: var(--fw-shadow);
+  z-index: var(--fw-z-base);
+  min-width: 260px;
+  font-family: var(--fw-font);
+  overflow: hidden;
+}
+
+.faciliweb-autofill-header {
+  padding: 10px 14px;
+  background-color: var(--fw-blue);
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.faciliweb-autofill-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  font-family: var(--fw-font);
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+  color: #1a1a2e;
+  border-bottom: 1px solid #eee;
+}
+
+.faciliweb-autofill-item:hover,
+.faciliweb-autofill-item:focus {
+  background-color: #e8f0fb;
+  outline: none;
+}
+
+.faciliweb-autofill-item:last-child { border-bottom: none; }
+
+.faciliweb-autofill-icon { font-size: 18px; flex-shrink: 0; }
+
+.faciliweb-autofill-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.faciliweb-autofill-site {
+  color: #6c757d;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* ─── Proposition de sauvegarde des identifiants ─────────────────────────── */
+#faciliweb-save-prompt {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  border: 2px solid var(--fw-blue);
+  border-radius: var(--fw-radius);
+  box-shadow: var(--fw-shadow);
+  padding: 16px 18px;
+  width: 320px;
+  font-family: var(--fw-font);
+  z-index: var(--fw-z-base);
+  color: #1a1a2e;
+}
+
+.faciliweb-save-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--fw-blue);
+  margin-bottom: 8px;
+}
+
+.faciliweb-save-detail {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #333;
+  margin-bottom: 12px;
+  padding: 8px 10px;
+  background-color: #f4f6f8;
+  border-radius: 6px;
+}
+
+.faciliweb-save-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.faciliweb-save-yes {
+  flex: 1;
+  background-color: var(--fw-green);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: var(--fw-font);
+}
+
+.faciliweb-save-yes:hover { opacity: 0.9; }
+
+.faciliweb-save-no {
+  background: none;
+  border: 2px solid #ccc;
+  color: #555;
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: var(--fw-font);
+}
+
+.faciliweb-save-no:hover { background-color: #f4f6f8; }
+
+/* ─── Bannière de suggestion d'orthographe ───────────────────────────────── */
+#faciliweb-typo-banner {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff9e6;
+  border: 2px solid #f0b429;
+  border-radius: var(--fw-radius);
+  box-shadow: var(--fw-shadow);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--fw-font);
+  font-size: 14px;
+  color: #1a1a2e;
+  z-index: 2147483646;
+  max-width: 640px;
+  width: 92%;
+}
+
+.faciliweb-typo-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.faciliweb-typo-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.faciliweb-typo-text strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #6b4d00;
+}
+
+.faciliweb-typo-detail {
+  font-size: 13px;
+}
+
+.faciliweb-typo-current {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-weight: bold;
+}
+
+.faciliweb-typo-suggest {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-weight: bold;
+}
+
+.faciliweb-typo-go {
+  background-color: var(--fw-green);
+  color: var(--fw-white);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: var(--fw-font);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.faciliweb-typo-go:hover { opacity: 0.85; }
+
+.faciliweb-typo-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--fw-gray);
+  flex-shrink: 0;
+}
+
+.faciliweb-typo-close:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Bannière du détecteur de captcha ───────────────────────────────────── */
+#faciliweb-captcha-banner {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--fw-white);
+  border: 2px solid var(--fw-blue);
+  border-radius: var(--fw-radius);
+  box-shadow: var(--fw-shadow);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--fw-font);
+  font-size: 14px;
+  color: #1a1a2e;
+  z-index: var(--fw-z-base);
+  max-width: 520px;
+  width: 90%;
+}
+
+.faciliweb-captcha-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.faciliweb-captcha-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.faciliweb-captcha-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--fw-gray);
+  flex-shrink: 0;
+}
+
+.faciliweb-captcha-close:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Bannière d'analyse de lien ─────────────────────────────────────────── */
+#faciliweb-link-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--fw-font);
+  font-size: 15px;
+  font-weight: bold;
+  z-index: var(--fw-z-base);
+  box-shadow: var(--fw-shadow);
+}
+
+.faciliweb-banner-safe {
+  background-color: #d4edda;
+  color: #155724;
+  border-bottom: 3px solid var(--fw-green);
+}
+
+.faciliweb-banner-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-bottom: 3px solid var(--fw-red);
+}
+
+.faciliweb-banner-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: inherit;
+  margin-left: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.faciliweb-banner-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}

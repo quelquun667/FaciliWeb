@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aide & fonctionnement — FaciliWeb</title>
+  <script src="../scripts/theme.js"></script>
+  <link rel="stylesheet" href="help.css" />
+</head>
+<body>
+  <header class="help-header">
+    <span class="help-logo" aria-hidden="true">❓</span>
+    <div>
+      <h1>Aide & fonctionnement</h1>
+      <p class="help-subtitle">Découvrez ce que fait chaque fonctionnalité de FaciliWeb.</p>
+    </div>
+  </header>
+
+  <nav class="help-toc" aria-label="Sommaire">
+    <strong>Sommaire :</strong>
+    <a href="#capslock">Majuscules</a>
+    <a href="#highlight">Surlignage</a>
+    <a href="#special">Caractères</a>
+    <a href="#jargon">Jargon</a>
+    <a href="#phishing">Hameçonnage</a>
+    <a href="#typo">Orthographe</a>
+    <a href="#attachment">Pièces jointes</a>
+    <a href="#captcha">Captcha</a>
+    <a href="#passwords">Identifiants</a>
+    <a href="#urldecomp">URL</a>
+    <a href="#breach">Fuite</a>
+    <a href="#timer">Pause</a>
+    <a href="#weekly">Semaine</a>
+    <a href="#notes">Notes</a>
+  </nav>
+
+  <main class="help-container">
+
+    <article class="help-card" id="capslock">
+      <h2>🔠 Alerte Majuscules</h2>
+      <p><strong>À quoi ça sert ?</strong> Vous prévenir si la touche Verrouillage Majuscule (Verr. Maj.) est activée pendant que vous tapez dans un champ.</p>
+      <p><strong>Comment ça marche ?</strong> Quand un champ texte est sélectionné et que Verr. Maj. est actif, un petit <strong>badge orange 🔒A</strong> apparaît juste à droite du champ. Passez la souris dessus : une infobulle vous explique que les majuscules sont verrouillées et comment les désactiver.</p>
+      <p><strong>Pourquoi c'est utile ?</strong> Les mots de passe distinguent majuscules et minuscules. Si vous tapez "MOTDEPASSE" alors que vous vouliez taper "motdepasse", la connexion échouera sans explication. FaciliWeb vous le dit discrètement, sans bloquer la page.</p>
+    </article>
+
+    <article class="help-card" id="highlight">
+      <h2>🟢 Surlignage des champs <em>(désactivé par défaut)</em></h2>
+      <p><strong>À quoi ça sert ?</strong> Encadrer les champs de saisie pour mieux les voir.</p>
+      <p><strong>Pourquoi désactivé par défaut ?</strong> Cette fonction peut entrer en conflit visuel avec le style natif de certains sites. Vous pouvez l'activer dans l'onglet <em>Paramètres</em> de la popup si vous le souhaitez.</p>
+      <p><strong>Comment ça marche (une fois activé) ?</strong> Quand vous cliquez dans un champ, un cadre coloré apparaît :
+        <span class="color-chip" style="background:#1a7a4a;">vert</span> pour un champ normal,
+        <span class="color-chip" style="background:#d4640a;">orange</span> pour un champ <em>sensible</em> (email, téléphone, mot de passe).
+      </p>
+    </article>
+
+    <article class="help-card" id="special">
+      <h2>✨ Caractères spéciaux</h2>
+      <p><strong>À quoi ça sert ?</strong> Insérer facilement les caractères @, €, #, etc. quand vous ne trouvez pas la touche sur votre clavier.</p>
+      <p><strong>Comment ça marche ?</strong> Un petit bouton bleu <kbd>@€#</kbd> apparaît en bas à droite de chaque page. Cliquez dessus pour ouvrir un panneau avec les caractères. Cliquez sur un caractère : il s'insère là où était votre curseur.</p>
+      <p><strong>Bonus :</strong> Chaque caractère a la <strong>combinaison clavier</strong> écrite en dessous (ex : @ → <kbd>Alt Gr + à</kbd>), pour apprendre à les taper directement.</p>
+    </article>
+
+    <article class="help-card" id="jargon">
+      <h2>📖 Traducteur de jargon</h2>
+      <p><strong>À quoi ça sert ?</strong> Expliquer en langage simple les mots techniques rencontrés sur internet.</p>
+      <p><strong>Comment ça marche ?</strong> FaciliWeb scanne le texte de la page. Quand un mot du dictionnaire est trouvé (ex. <em>phishing</em>, <em>cookie</em>, <em>VPN</em>), il est souligné en pointillé bleu. Au survol de la souris, une bulle apparaît avec la définition simplifiée.</p>
+      <p><strong>Mots inclus :</strong> phishing, malware, ransomware, cookie, https, vpn, firewall, spam, authentification, 2fa, chiffrement, virus, spyware, adware, navigateur, et plus.</p>
+    </article>
+
+    <article class="help-card" id="phishing">
+      <h2>🛡️ Protection anti-hameçonnage</h2>
+      <p><strong>À quoi ça sert ?</strong> Vous empêcher de tomber sur un site frauduleux qui se fait passer pour votre banque, votre messagerie ou un service public.</p>
+      <p><strong>Comment ça marche ?</strong> À chaque chargement de page, FaciliWeb compare l'adresse avec une <strong>liste noire de domaines suspects</strong>. Si correspondance, une grande alerte rouge plein écran apparaît avec deux options : <em>Retourner en sécurité</em> ou <em>Continuer quand même</em> (à n'utiliser qu'en pleine connaissance de cause).</p>
+    </article>
+
+    <article class="help-card" id="typo">
+      <h2>🔤 Vérificateur d'orthographe de domaine</h2>
+      <p><strong>À quoi ça sert ?</strong> Repérer si vous êtes sur un faux site dont l'adresse imite un site officiel (ex. <code>paypa1.com</code> au lieu de <code>paypal.com</code>).</p>
+      <p><strong>Comment ça marche ?</strong> FaciliWeb compare l'adresse du site visité à une liste de 45 domaines officiels (banques, services publics, géants du web). S'il y a juste 1 ou 2 lettres différentes, une bannière jaune en haut de page suggère le vrai domaine, avec un bouton pour s'y rendre directement.</p>
+    </article>
+
+    <article class="help-card" id="attachment">
+      <h2>📎 Vérificateur de pièces jointes</h2>
+      <p><strong>À quoi ça sert ?</strong> Vous avertir avant de cliquer sur un lien qui télécharge un fichier potentiellement dangereux (.exe, .zip, .scr, etc.).</p>
+      <p><strong>Comment ça marche ?</strong> FaciliWeb scanne tous les liens de la page. Si un lien pointe vers un type de fichier à risque, un badge ⚠️/❗ apparaît à côté. Au survol, une infobulle explique le risque et conseille : <em>"Téléchargez-le uniquement si vous attendiez ce fichier d'une personne de confiance."</em></p>
+    </article>
+
+    <article class="help-card" id="captcha">
+      <h2>🤖 Détecteur de captcha</h2>
+      <p><strong>À quoi ça sert ?</strong> Vous rassurer face aux tests <em>"Je ne suis pas un robot"</em> qui surprennent les personnes peu habituées.</p>
+      <p><strong>Comment ça marche ?</strong> Si FaciliWeb détecte un captcha (reCAPTCHA, hCaptcha, Cloudflare Turnstile…) sur la page, une petite bannière apparaît en bas avec un message : <em>"C'est normal, ce n'est pas une arnaque. Le site vous demande de prouver que vous n'êtes pas un robot."</em></p>
+    </article>
+
+    <article class="help-card" id="passwords">
+      <h2>🔑 Gestion des identifiants & remplissage automatique</h2>
+      <p><strong>À quoi ça sert ?</strong> Stocker vos mots de passe et les remplir automatiquement lorsque vous vous connectez à un site.</p>
+      <p><strong>Comment ça marche ?</strong></p>
+      <ul>
+        <li><strong>Ajouter manuellement :</strong> page <em>Mes identifiants</em>, bouton « + Ajouter ». Le site web est pré-rempli avec l'adresse de l'onglet ouvert.</li>
+        <li><strong>Sauvegarde automatique :</strong> quand vous tapez vos identifiants dans un formulaire, FaciliWeb détecte la soumission et affiche en bas à droite : <em>« Enregistrer ces identifiants ? »</em>.</li>
+        <li><strong>Remplissage automatique :</strong> quand vous cliquez dans un champ identifiant, FaciliWeb affiche une bulle proposant les identifiants enregistrés pour ce site. Un clic remplit les deux champs.</li>
+      </ul>
+      <p><strong>Sécurité :</strong> tout est stocké <strong>localement</strong> sur votre appareil. Rien n'est envoyé sur internet.</p>
+    </article>
+
+    <article class="help-card" id="urldecomp">
+      <h2>🔎 Comprendre une adresse internet</h2>
+      <p><strong>À quoi ça sert ?</strong> Savoir lire une adresse web pour vérifier qu'elle est légitime.</p>
+      <p><strong>Comment ça marche ?</strong> Cliquez sur l'icône FaciliWeb : la décomposition de l'adresse du site actuel s'affiche, segment par segment :</p>
+      <ul>
+        <li><span class="color-chip" style="background:#d4edda;color:#155724;">https://</span> = connexion chiffrée (sécurisée)</li>
+        <li><span class="color-chip" style="background:#e2e3e5;">sous-domaine</span> = section du site (www, mail...)</li>
+        <li><span class="color-chip" style="background:#ffe9b3;color:#6b4d00;">nom du site</span> = ⭐ <strong>le plus important</strong></li>
+        <li><span class="color-chip" style="background:#fff4cc;color:#8a6500;">.fr / .com</span> = extension</li>
+      </ul>
+    </article>
+
+    <article class="help-card" id="breach">
+      <h2>🔓 Alerte fuite de données</h2>
+      <p><strong>À quoi ça sert ?</strong> Vérifier si votre adresse email est apparue dans une fuite de données (un site qui s'est fait pirater et dont les comptes ont été dérobés).</p>
+      <p><strong>Comment ça marche ?</strong> Dans l'onglet « Outils » de la popup, tapez votre email et cliquez sur « 🔎 Vérifier ». FaciliWeb ouvre alors la page sécurisée du service public mondial <a href="https://haveibeenpwned.com/" target="_blank" rel="noopener noreferrer">HaveIBeenPwned</a> qui vous dit si votre email a été compromis.</p>
+      <p><strong>Si oui ?</strong> Changez immédiatement le mot de passe du site concerné, et n'utilisez plus jamais ce mot de passe ailleurs.</p>
+    </article>
+
+    <article class="help-card" id="timer">
+      <h2>⏰ Pause écran</h2>
+      <p><strong>À quoi ça sert ?</strong> Vous rappeler de faire une pause toutes les X minutes pour reposer vos yeux et votre dos.</p>
+      <p><strong>Comment ça marche ?</strong> Réglez la durée (par défaut 30 min) dans l'onglet « Outils » et cliquez sur « ▶ Activer ». Toutes les X minutes, une notification du navigateur apparaît pour vous suggérer de faire une pause. Cliquez sur « ⏹ Désactiver » pour arrêter.</p>
+    </article>
+
+    <article class="help-card" id="weekly">
+      <h2>📊 Résumé hebdomadaire</h2>
+      <p><strong>À quoi ça sert ?</strong> Faire le point sur vos habitudes de navigation chaque semaine.</p>
+      <p><strong>Comment ça marche ?</strong> Une fois par semaine, FaciliWeb consulte l'historique de votre navigateur et calcule vos 3 sites les plus visités. Le résumé s'affiche dans l'onglet « Accueil » avec un podium 🥇🥈🥉. Une notification système vous prévient.</p>
+    </article>
+
+    <article class="help-card" id="notes">
+      <h2>📝 Carnet de notes</h2>
+      <p><strong>À quoi ça sert ?</strong> Avoir un petit bloc-notes accessible en un clic, pour griffonner un code reçu par SMS, un mot de passe temporaire, une adresse à retenir.</p>
+      <p><strong>Comment ça marche ?</strong> Tapez dans la zone de texte de l'onglet « Outils ». Le contenu est <strong>sauvegardé automatiquement</strong> en local après 400 millisecondes d'inactivité. Le bouton « 🗑️ Vider » efface tout (avec confirmation).</p>
+    </article>
+
+  </main>
+
+  <footer class="help-footer">
+    <p>💡 <strong>Besoin d'aide supplémentaire ?</strong> Consultez le <a href="../glossary/glossary.html">glossaire visuel des arnaques</a> et l'<a href="../annuaire/annuaire.html">annuaire des services publics officiels</a>.</p>
+  </footer>
+</body>
+</html>

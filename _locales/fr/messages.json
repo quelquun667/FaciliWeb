@@ -1,0 +1,162 @@
+{
+  "extensionName": {
+    "message": "FaciliWeb",
+    "description": "Nom de l'extension"
+  },
+  "extensionDescription": {
+    "message": "Rendez la navigation web plus sûre et plus simple.",
+    "description": "Description de l'extension"
+  },
+  "popupTitle": {
+    "message": "FaciliWeb",
+    "description": "Titre de la popup"
+  },
+  "popupSubtitle": {
+    "message": "Votre assistant numérique",
+    "description": "Sous-titre de la popup"
+  },
+  "featuresTitle": {
+    "message": "Fonctionnalités actives",
+    "description": "Titre de la section des fonctionnalités"
+  },
+  "featureCapsLock": {
+    "message": "Alerte Majuscules",
+    "description": "Nom de la fonctionnalité de détection du verrouillage majuscule"
+  },
+  "featureHighlight": {
+    "message": "Surlignage des champs",
+    "description": "Nom de la fonctionnalité de surlignage des champs"
+  },
+  "featureSpecialChars": {
+    "message": "Caractères spéciaux",
+    "description": "Nom de la fonctionnalité des caractères spéciaux"
+  },
+  "featurePhishing": {
+    "message": "Protection anti-hameçonnage",
+    "description": "Nom de la fonctionnalité anti-phishing"
+  },
+  "featureJargon": {
+    "message": "Traducteur de jargon",
+    "description": "Nom de la fonctionnalité de traduction du jargon"
+  },
+  "goldenRulesTitle": {
+    "message": "Les Règles d'Or",
+    "description": "Titre de la section des règles d'or"
+  },
+  "goldenRule1": {
+    "message": "Ne donnez jamais votre mot de passe par e-mail ou téléphone.",
+    "description": "Règle d'or numéro 1"
+  },
+  "goldenRule2": {
+    "message": "Vérifiez toujours l'adresse du site avant de vous connecter.",
+    "description": "Règle d'or numéro 2"
+  },
+  "goldenRule3": {
+    "message": "Méfiez-vous des messages urgents qui demandent une action immédiate.",
+    "description": "Règle d'or numéro 3"
+  },
+  "goldenRule4": {
+    "message": "Un vrai organisme ne vous demandera jamais votre code de carte bancaire par téléphone.",
+    "description": "Règle d'or numéro 4"
+  },
+  "goldenRule5": {
+    "message": "Si une offre semble trop belle pour être vraie, c'est probablement une arnaque.",
+    "description": "Règle d'or numéro 5"
+  },
+  "settingsTitle": {
+    "message": "Paramètres FaciliWeb",
+    "description": "Titre de la page des paramètres"
+  },
+  "settingsLanguage": {
+    "message": "Langue",
+    "description": "Option de sélection de la langue"
+  },
+  "settingsReset": {
+    "message": "Réinitialiser toutes les données",
+    "description": "Bouton de réinitialisation"
+  },
+  "settingsResetConfirm": {
+    "message": "Êtes-vous sûr ? Toutes vos données seront supprimées.",
+    "description": "Message de confirmation de réinitialisation"
+  },
+  "settingsSaved": {
+    "message": "Paramètres sauvegardés !",
+    "description": "Message de confirmation de sauvegarde"
+  },
+  "contextMenuAnalyzeLink": {
+    "message": "FaciliWeb : Analyser ce lien",
+    "description": "Option du menu contextuel pour analyser un lien"
+  },
+  "dangerZoneTitle": {
+    "message": "⚠️ ATTENTION — Site suspect détecté !",
+    "description": "Titre de l'alerte de danger"
+  },
+  "dangerZoneMessage": {
+    "message": "Ce site pourrait être une tentative d'hameçonnage (phishing). Il est conseillé de NE PAS continuer.",
+    "description": "Message de l'alerte de danger"
+  },
+  "dangerZoneBack": {
+    "message": "Retourner en sécurité",
+    "description": "Bouton pour quitter le site suspect"
+  },
+  "dangerZoneContinue": {
+    "message": "Je comprends le risque, continuer quand même",
+    "description": "Bouton pour continuer malgré le risque"
+  },
+  "capsLockWarning": {
+    "message": "⚠️ Verrouillage MAJUSCULES activé !",
+    "description": "Avertissement de verrouillage des majuscules"
+  },
+  "specialCharsTitle": {
+    "message": "Insérer un caractère spécial",
+    "description": "Titre du panneau des caractères spéciaux"
+  },
+  "specialCharsHint": {
+    "message": "Cliquez sur un caractère pour l'insérer dans votre texte.",
+    "description": "Conseil pour l'utilisation des caractères spéciaux"
+  },
+  "passwordManagerTitle": {
+    "message": "Mes identifiants",
+    "description": "Titre du gestionnaire de mots de passe"
+  },
+  "passwordManagerAdd": {
+    "message": "Ajouter un identifiant",
+    "description": "Bouton pour ajouter un identifiant"
+  },
+  "passwordManagerSite": {
+    "message": "Site web",
+    "description": "Champ du site web"
+  },
+  "passwordManagerUsername": {
+    "message": "Nom d'utilisateur",
+    "description": "Champ du nom d'utilisateur"
+  },
+  "passwordManagerPassword": {
+    "message": "Mot de passe",
+    "description": "Champ du mot de passe"
+  },
+  "passwordManagerSave": {
+    "message": "Enregistrer",
+    "description": "Bouton pour enregistrer"
+  },
+  "passwordManagerCancel": {
+    "message": "Annuler",
+    "description": "Bouton pour annuler"
+  },
+  "openSettings": {
+    "message": "Ouvrir les paramètres",
+    "description": "Bouton d'accès aux paramètres"
+  },
+  "linkAnalysisTitle": {
+    "message": "Analyse du lien",
+    "description": "Titre de l'analyse de lien"
+  },
+  "linkAnalysisSafe": {
+    "message": "Ce lien semble sûr.",
+    "description": "Message de lien sûr"
+  },
+  "linkAnalysisDanger": {
+    "message": "Ce lien semble suspect ! Soyez prudent.",
+    "description": "Message de lien dangereux"
+  }
+}

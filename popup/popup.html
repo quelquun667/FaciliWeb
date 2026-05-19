@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FaciliWeb</title>
+  <script src="../scripts/theme.js"></script>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="popup-header">
+    <div class="popup-logo" aria-hidden="true">🛡️</div>
+    <div class="popup-header-text">
+      <h1 class="popup-title">FaciliWeb</h1>
+      <p class="popup-subtitle">Votre assistant numérique</p>
+    </div>
+    <button id="btn-theme-toggle" class="header-icon-btn" aria-label="Basculer le thème sombre">🌙</button>
+  </header>
+
+  <!-- Onglets principaux -->
+  <nav class="tabs" role="tablist" aria-label="Sections de FaciliWeb">
+    <button class="tab-btn active" role="tab" data-tab="home" aria-selected="true">🏠 Accueil</button>
+    <button class="tab-btn" role="tab" data-tab="tools" aria-selected="false">🧰 Outils</button>
+    <button class="tab-btn" role="tab" data-tab="settings" aria-selected="false">⚙️ Paramètres</button>
+  </nav>
+
+  <main>
+    <!-- ──────── ONGLET ACCUEIL ──────── -->
+    <div class="tab-panel active" role="tabpanel" data-panel="home">
+
+      <section class="popup-section">
+        <h2 class="section-title">🔎 Comprendre cette adresse</h2>
+        <div id="url-decomp" class="url-decomp" aria-live="polite"></div>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">📊 Votre semaine</h2>
+        <div id="weekly-summary" class="weekly-summary" aria-live="polite"></div>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">🕐 Sites récents</h2>
+        <div id="history-list" class="history-list" aria-live="polite"></div>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">💛 Règles d'Or</h2>
+        <ol class="golden-rules-list">
+          <li class="golden-rule">Ne donnez jamais votre mot de passe par e-mail ou téléphone.</li>
+          <li class="golden-rule">Vérifiez toujours l'adresse du site avant de vous connecter.</li>
+          <li class="golden-rule">Méfiez-vous des messages urgents qui demandent une action immédiate.</li>
+          <li class="golden-rule">Un vrai organisme ne demande jamais votre code de carte par téléphone.</li>
+          <li class="golden-rule">Si une offre semble trop belle pour être vraie, c'est une arnaque.</li>
+        </ol>
+      </section>
+    </div>
+
+    <!-- ──────── ONGLET OUTILS ──────── -->
+    <div class="tab-panel" role="tabpanel" data-panel="tools">
+
+      <section class="popup-section">
+        <h2 class="section-title">📝 Mon carnet de notes</h2>
+        <p class="hint">Notez ici un mot de passe temporaire, un code reçu, une adresse...</p>
+        <textarea
+          id="notes-textarea"
+          class="notes-textarea"
+          rows="4"
+          placeholder="Écrivez ici, c'est sauvegardé automatiquement."
+          aria-label="Carnet de notes personnel"
+        ></textarea>
+        <div class="notes-actions">
+          <span id="notes-status" class="notes-status" aria-live="polite"></span>
+          <button id="btn-notes-clear" class="btn btn-secondary btn-small">🗑️ Vider</button>
+        </div>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">⏰ Pause écran</h2>
+        <p id="break-timer-status" class="status-badge" aria-live="polite">Désactivée</p>
+        <div class="grid-2col">
+          <label class="form-label" for="break-timer-input">Toutes les (minutes) :</label>
+          <input
+            type="number"
+            id="break-timer-input"
+            class="form-input"
+            min="1"
+            max="240"
+            value="30"
+          />
+        </div>
+        <button id="btn-break-toggle" class="btn btn-primary">▶ Activer</button>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">🔓 Mon email a-t-il fuité ?</h2>
+        <p class="hint">Vérifie si votre adresse email apparaît dans une fuite de données connue.</p>
+        <div class="grid-2col">
+          <label class="form-label" for="breach-input">Votre email :</label>
+          <input
+            type="email"
+            id="breach-input"
+            class="form-input"
+            placeholder="exemple@email.com"
+            autocomplete="off"
+          />
+        </div>
+        <button id="btn-breach-check" class="btn btn-primary">🔎 Vérifier</button>
+        <p id="breach-result" class="breach-result" aria-live="polite"></p>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">📚 Documentation et accès rapide</h2>
+        <div class="quick-actions">
+          <button id="btn-passwords" class="quick-action-btn">
+            <span class="qa-icon">🔑</span>
+            <span class="qa-label">Mes identifiants</span>
+          </button>
+          <button id="btn-annuaire" class="quick-action-btn">
+            <span class="qa-icon">🏛️</span>
+            <span class="qa-label">Services publics</span>
+          </button>
+          <button id="btn-glossary" class="quick-action-btn">
+            <span class="qa-icon">📚</span>
+            <span class="qa-label">Glossaire des arnaques</span>
+          </button>
+          <button id="btn-help" class="quick-action-btn">
+            <span class="qa-icon">❓</span>
+            <span class="qa-label">Aide & fonctionnement</span>
+          </button>
+          <button id="btn-guides" class="quick-action-btn">
+            <span class="qa-icon">🖱️</span>
+            <span class="qa-label">Mini-guides pratiques</span>
+          </button>
+          <button id="btn-shortcuts" class="quick-action-btn">
+            <span class="qa-icon">⌨️</span>
+            <span class="qa-label">Raccourcis clavier</span>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ──────── ONGLET PARAMÈTRES ──────── -->
+    <div class="tab-panel" role="tabpanel" data-panel="settings">
+
+      <section class="popup-section">
+        <h2 class="section-title">🎨 Apparence</h2>
+        <div class="setting-row">
+          <label for="setting-theme" class="setting-label">Thème sombre</label>
+          <button class="toggle-switch" role="switch" id="setting-theme" aria-checked="false" data-setting="darkMode">
+            <span class="toggle-thumb"></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">👁️ Fonctionnalités visuelles</h2>
+
+        <div class="setting-row">
+          <label for="setting-capslock" class="setting-label">🔤 Alerte Majuscules</label>
+          <button class="toggle-switch" role="switch" id="setting-capslock" aria-checked="true" data-setting="capsLockEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+
+        <div class="setting-row">
+          <label for="setting-highlight" class="setting-label">🟢 Surlignage des champs</label>
+          <button class="toggle-switch" role="switch" id="setting-highlight" aria-checked="true" data-setting="highlightEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+
+        <div class="setting-row">
+          <label for="setting-special" class="setting-label">✨ Caractères spéciaux</label>
+          <button class="toggle-switch" role="switch" id="setting-special" aria-checked="true" data-setting="specialCharsEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+
+        <div class="setting-row">
+          <label for="setting-jargon" class="setting-label">📖 Traducteur de jargon</label>
+          <button class="toggle-switch" role="switch" id="setting-jargon" aria-checked="true" data-setting="jargonEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">🛡️ Sécurité</h2>
+
+        <div class="setting-row">
+          <label for="setting-phishing" class="setting-label">🛡️ Anti-hameçonnage</label>
+          <button class="toggle-switch" role="switch" id="setting-phishing" aria-checked="true" data-setting="phishingEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+
+        <div class="setting-row">
+          <label for="setting-typo" class="setting-label">🔤 Vérif. orthographe domaine</label>
+          <button class="toggle-switch" role="switch" id="setting-typo" aria-checked="true" data-setting="typoDetectorEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+
+        <div class="setting-row">
+          <label for="setting-attachment" class="setting-label">📎 Vérif. pièces jointes</label>
+          <button class="toggle-switch" role="switch" id="setting-attachment" aria-checked="true" data-setting="attachmentCheckerEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+
+        <div class="setting-row">
+          <label for="setting-captcha" class="setting-label">🤖 Détecteur de captcha</label>
+          <button class="toggle-switch" role="switch" id="setting-captcha" aria-checked="true" data-setting="captchaDetectorEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+
+        <div class="setting-row">
+          <label for="setting-autofill" class="setting-label">🔑 Proposer remplissage et sauvegarde des identifiants</label>
+          <button class="toggle-switch" role="switch" id="setting-autofill" aria-checked="true" data-setting="autofillEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">🌟 Bien-être</h2>
+
+        <div class="setting-row">
+          <label for="setting-weekly" class="setting-label">📊 Résumé hebdomadaire</label>
+          <button class="toggle-switch" role="switch" id="setting-weekly" aria-checked="true" data-setting="weeklySummaryEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+
+        <div class="setting-row">
+          <label for="setting-break-default" class="setting-label">Durée pause par défaut</label>
+          <input type="number" id="setting-break-default" class="form-input setting-inline-input" min="1" max="240" value="30" />
+        </div>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">🌍 Langue</h2>
+        <div class="radio-group" role="radiogroup">
+          <label class="radio-option">
+            <input type="radio" name="popup-language" value="fr" />
+            <span>🇫🇷 Français</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="popup-language" value="en" />
+            <span>🇬🇧 English</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="popup-section danger-section">
+        <h2 class="section-title">🗑️ Réinitialisation</h2>
+        <p class="hint">Supprime tous vos paramètres et identifiants. Cette action est irréversible.</p>
+        <button id="btn-reset-all" class="btn btn-danger">🗑️ Tout réinitialiser</button>
+      </section>
+    </div>
+  </main>
+
+  <div id="save-toast" class="save-toast hidden" role="status" aria-live="polite"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

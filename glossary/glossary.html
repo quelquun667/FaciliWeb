@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glossaire des arnaques — FaciliWeb</title>
+  <script src="../scripts/theme.js"></script>
+  <link rel="stylesheet" href="glossary.css" />
+</head>
+<body>
+  <header class="glossary-header">
+    <span class="glossary-logo" aria-hidden="true">🛡️</span>
+    <div>
+      <h1>Glossaire visuel des arnaques</h1>
+      <p class="glossary-subtitle">Apprenez à reconnaître les arnaques courantes grâce à des exemples annotés.</p>
+    </div>
+  </header>
+
+  <main class="glossary-grid">
+
+    <!-- Carte 1 : Faux mail bancaire -->
+    <article class="scam-card" aria-labelledby="scam1-title">
+      <h2 class="scam-title" id="scam1-title">📧 Faux mail bancaire</h2>
+      <p class="scam-desc">Un mail qui prétend venir de votre banque et demande de cliquer pour "vérifier" votre compte.</p>
+
+      <div class="mockup mockup-email">
+        <div class="mockup-email-header">
+          <span class="mockup-from">De : <strong>service-securite@bnp-paribas-securite.xyz</strong>
+            <span class="annotation annotation-1" tabindex="0" aria-label="Indice numéro 1">1</span>
+          </span>
+          <span class="mockup-subject">⚠️ URGENT : votre compte sera bloqué dans 24h
+            <span class="annotation annotation-2" tabindex="0" aria-label="Indice numéro 2">2</span>
+          </span>
+        </div>
+        <div class="mockup-email-body">
+          <p>Cher client,</p>
+          <p>Nous avons détécté une activitée suspecte sur votre compte.
+            <span class="annotation annotation-3" tabindex="0" aria-label="Indice numéro 3">3</span>
+          </p>
+          <p>Pour évitter la suspention, veuillez cliquer ici :</p>
+          <p><a href="#" class="mockup-link">https://bnp-paribas-verification.xyz/login
+            <span class="annotation annotation-4" tabindex="0" aria-label="Indice numéro 4">4</span>
+          </a></p>
+        </div>
+      </div>
+
+      <ul class="scam-indicators">
+        <li><span class="indicator-num">1</span> L'adresse de l'expéditeur n'est pas un domaine officiel de la banque (`.xyz` au lieu de `.fr`).</li>
+        <li><span class="indicator-num">2</span> Ton urgent et menaçant pour vous pousser à agir vite sans réfléchir.</li>
+        <li><span class="indicator-num">3</span> Fautes d'orthographe : une vraie banque relit ses mails.</li>
+        <li><span class="indicator-num">4</span> Le lien ne renvoie pas vers le vrai site de la banque.</li>
+      </ul>
+
+      <div class="scam-action">
+        <strong>✅ Que faire ?</strong> Ne cliquez pas. Ouvrez votre banque depuis votre application habituelle ou en tapant l'adresse vous-même.
+      </div>
+    </article>
+
+    <!-- Carte 2 : SMS de colis bloqué -->
+    <article class="scam-card" aria-labelledby="scam2-title">
+      <h2 class="scam-title" id="scam2-title">📦 SMS "Colis bloqué"</h2>
+      <p class="scam-desc">Un SMS prétend qu'un colis est en attente et demande de payer une petite somme.</p>
+
+      <div class="mockup mockup-sms">
+        <div class="mockup-sms-bubble">
+          <p><strong>La Poste :</strong> Votre colis est en attente.
+            <span class="annotation annotation-1" tabindex="0" aria-label="Indice 1">1</span>
+          </p>
+          <p>Frais de redirection : 1,99€
+            <span class="annotation annotation-2" tabindex="0" aria-label="Indice 2">2</span>
+          </p>
+          <p>Réglez ici : laposte-suivi.com/colis-12345
+            <span class="annotation annotation-3" tabindex="0" aria-label="Indice 3">3</span>
+          </p>
+        </div>
+      </div>
+
+      <ul class="scam-indicators">
+        <li><span class="indicator-num">1</span> Vous n'attendiez pas de colis ? C'est probablement faux.</li>
+        <li><span class="indicator-num">2</span> La Poste ne demande JAMAIS de paiement par SMS.</li>
+        <li><span class="indicator-num">3</span> Le site officiel est <code>laposte.fr</code>, pas <code>laposte-suivi.com</code>.</li>
+      </ul>
+
+      <div class="scam-action">
+        <strong>✅ Que faire ?</strong> Supprimez le SMS. Si vous attendiez vraiment un colis, allez sur <code>laposte.fr</code> ou utilisez l'app officielle.
+      </div>
+    </article>
+
+    <!-- Carte 3 : Faux support technique -->
+    <article class="scam-card" aria-labelledby="scam3-title">
+      <h2 class="scam-title" id="scam3-title">💻 Faux support technique</h2>
+      <p class="scam-desc">Une pop-up bruyante affirme que votre ordinateur est infecté et propose un numéro à appeler.</p>
+
+      <div class="mockup mockup-popup">
+        <div class="mockup-popup-window">
+          <div class="mockup-popup-bar">Microsoft Security Alert
+            <span class="annotation annotation-1" tabindex="0" aria-label="Indice 1">1</span>
+          </div>
+          <div class="mockup-popup-body">
+            <p class="mockup-popup-title">⚠️ VIRUS DÉTECTÉ !</p>
+            <p>Votre ordinateur est infecté par 5 virus.
+              <span class="annotation annotation-2" tabindex="0" aria-label="Indice 2">2</span>
+            </p>
+            <p><strong>Appelez immédiatement le support :</strong></p>
+            <p class="mockup-phone">📞 01 23 45 67 89
+              <span class="annotation annotation-3" tabindex="0" aria-label="Indice 3">3</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <ul class="scam-indicators">
+        <li><span class="indicator-num">1</span> Microsoft (ou Apple, Google…) ne diffuse JAMAIS d'alerte virus via une page web.</li>
+        <li><span class="indicator-num">2</span> Un site web ne peut pas scanner votre ordinateur. C'est techniquement impossible.</li>
+        <li><span class="indicator-num">3</span> Si vous appelez, un faux technicien vous demandera l'accès à distance pour "réparer". C'est l'arnaque.</li>
+      </ul>
+
+      <div class="scam-action">
+        <strong>✅ Que faire ?</strong> Fermez l'onglet. Si la page bloque, fermez le navigateur via le gestionnaire des tâches (Ctrl + Maj + Échap).
+      </div>
+    </article>
+
+    <!-- Carte 4 : Faux remboursement impôts -->
+    <article class="scam-card" aria-labelledby="scam4-title">
+      <h2 class="scam-title" id="scam4-title">💶 Faux remboursement d'impôts</h2>
+      <p class="scam-desc">Un mail annonce un remboursement et demande vos coordonnées bancaires pour le toucher.</p>
+
+      <div class="mockup mockup-email">
+        <div class="mockup-email-header">
+          <span class="mockup-from">De : impots.gouv.remboursement@finances-fr.com
+            <span class="annotation annotation-1" tabindex="0" aria-label="Indice 1">1</span>
+          </span>
+          <span class="mockup-subject">Vous avez droit à un remboursement de 245,67 €
+            <span class="annotation annotation-2" tabindex="0" aria-label="Indice 2">2</span>
+          </span>
+        </div>
+        <div class="mockup-email-body">
+          <p>Suite au recalcul de votre déclaration 2024, vous bénéficiez d'un remboursement.</p>
+          <p>Pour le percevoir, indiquez votre <strong>numéro de carte bancaire</strong> ici :
+            <span class="annotation annotation-3" tabindex="0" aria-label="Indice 3">3</span>
+          </p>
+          <p><a href="#" class="mockup-link">https://impots-remboursement-fr.net</a></p>
+        </div>
+      </div>
+
+      <ul class="scam-indicators">
+        <li><span class="indicator-num">1</span> Le vrai site des impôts est <code>impots.gouv.fr</code> (et seulement celui-là).</li>
+        <li><span class="indicator-num">2</span> Une somme précise au centime pour vous donner confiance.</li>
+        <li><span class="indicator-num">3</span> Les impôts remboursent par <strong>virement bancaire</strong>, pas via une carte. Ils ont déjà votre RIB.</li>
+      </ul>
+
+      <div class="scam-action">
+        <strong>✅ Que faire ?</strong> Connectez-vous à votre compte sur <code>impots.gouv.fr</code> avec FranceConnect pour vérifier.
+      </div>
+    </article>
+
+    <!-- Carte 5 : Faux Netflix paiement échoué -->
+    <article class="scam-card" aria-labelledby="scam5-title">
+      <h2 class="scam-title" id="scam5-title">🎬 Faux Netflix "paiement échoué"</h2>
+      <p class="scam-desc">Un mail prétend que votre paiement a échoué et propose de "mettre à jour" votre carte.</p>
+
+      <div class="mockup mockup-email">
+        <div class="mockup-email-header">
+          <span class="mockup-from">De : Netflix &lt;billing@netfllix-account.com&gt;
+            <span class="annotation annotation-1" tabindex="0" aria-label="Indice 1">1</span>
+          </span>
+          <span class="mockup-subject">Action requise : mise à jour de paiement</span>
+        </div>
+        <div class="mockup-email-body">
+          <p>Votre abonnement sera suspendu sous 24h.
+            <span class="annotation annotation-2" tabindex="0" aria-label="Indice 2">2</span>
+          </p>
+          <p>Mettez à jour votre carte ici :</p>
+          <p><a href="#" class="mockup-link">netfllix-update-account.com
+            <span class="annotation annotation-3" tabindex="0" aria-label="Indice 3">3</span>
+          </a></p>
+        </div>
+      </div>
+
+      <ul class="scam-indicators">
+        <li><span class="indicator-num">1</span> "netfllix" avec deux L : c'est volontaire pour vous tromper.</li>
+        <li><span class="indicator-num">2</span> Pression du temps : un classique des arnaques.</li>
+        <li><span class="indicator-num">3</span> Le vrai domaine est <code>netflix.com</code>, pas un dérivé.</li>
+      </ul>
+
+      <div class="scam-action">
+        <strong>✅ Que faire ?</strong> Allez directement sur <code>netflix.com</code> ou ouvrez l'application pour vérifier votre compte.
+      </div>
+    </article>
+
+    <!-- Carte 6 : Gain à un concours -->
+    <article class="scam-card" aria-labelledby="scam6-title">
+      <h2 class="scam-title" id="scam6-title">🎁 "Vous avez gagné un iPhone"</h2>
+      <p class="scam-desc">Une page colorée annonce que vous êtes le gagnant et demande de payer des "frais de livraison".</p>
+
+      <div class="mockup mockup-popup">
+        <div class="mockup-popup-window">
+          <div class="mockup-popup-bar" style="background-color: #ff5722;">🎉 FÉLICITATIONS !</div>
+          <div class="mockup-popup-body">
+            <p class="mockup-popup-title">VOUS AVEZ GAGNÉ UN IPHONE 15 !
+              <span class="annotation annotation-1" tabindex="0" aria-label="Indice 1">1</span>
+            </p>
+            <p>Vous êtes le visiteur n°1 000 000 !
+              <span class="annotation annotation-2" tabindex="0" aria-label="Indice 2">2</span>
+            </p>
+            <p>Frais de livraison : seulement 1,99 €
+              <span class="annotation annotation-3" tabindex="0" aria-label="Indice 3">3</span>
+            </p>
+            <button class="mockup-btn">RÉCLAMER MON CADEAU</button>
+          </div>
+        </div>
+      </div>
+
+      <ul class="scam-indicators">
+        <li><span class="indicator-num">1</span> Personne ne gagne un iPhone juste en surfant sur le web.</li>
+        <li><span class="indicator-num">2</span> Le "1 millionième visiteur" est un classique des arnaques depuis 20 ans.</li>
+        <li><span class="indicator-num">3</span> Vous payez 1,99 € mais vous donnez votre carte bancaire à des escrocs qui en prélèveront bien plus.</li>
+      </ul>
+
+      <div class="scam-action">
+        <strong>✅ Que faire ?</strong> Fermez l'onglet. Règle d'or : si c'est trop beau pour être vrai, c'est faux.
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="glossary-footer">
+    <p>💡 <strong>En cas de doute :</strong> ne cliquez pas, ne répondez pas. Demandez à un proche ou consultez <code>cybermalveillance.gouv.fr</code>.</p>
+  </footer>
+</body>
+</html>

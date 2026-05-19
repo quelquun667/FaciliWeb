@@ -1,0 +1,253 @@
+/* Annuaire des services publics — FaciliWeb */
+
+:root,
+:root[data-theme="light"] {
+  --fw-blue: #1a5fa8;
+  --fw-blue-dark: #0d3a6e;
+  --fw-blue-light: #e8f0fb;
+  --fw-red: #c0392b;
+  --fw-green: #1a7a4a;
+  --fw-gray: #6c757d;
+  --fw-gray-light: #f4f6f8;
+  --fw-white: #ffffff;
+  --fw-text: #1a1a2e;
+  --fw-bg-body: #f0f2f5;
+  --fw-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --fw-radius: 12px;
+  --fw-font: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --fw-blue: #4f9ce5;
+  --fw-blue-dark: #2a6fb0;
+  --fw-blue-light: #1e2c45;
+  --fw-red: #ff6b5e;
+  --fw-green: #5ad394;
+  --fw-gray: #9aa0aa;
+  --fw-gray-light: #2a2f3a;
+  --fw-white: #2a2f3a;
+  --fw-text: #e8e8ee;
+  --fw-bg-body: #15171c;
+  --fw-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fw-font);
+  font-size: 16px;
+  color: var(--fw-text);
+  background-color: var(--fw-bg-body);
+  padding: 24px 16px 40px;
+  min-height: 100vh;
+}
+
+/* ─── En-tête ─────────────────────────────────────────────────────────────── */
+.annuaire-header {
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, var(--fw-blue), var(--fw-blue-dark));
+  color: var(--fw-white);
+  padding: 24px 28px;
+  border-radius: var(--fw-radius);
+  box-shadow: var(--fw-shadow);
+}
+
+.annuaire-logo { font-size: 44px; line-height: 1; }
+.annuaire-header h1 { font-size: 24px; font-weight: 700; }
+.annuaire-subtitle { font-size: 14px; opacity: 0.92; margin-top: 4px; line-height: 1.4; }
+
+main { max-width: 1200px; margin: 0 auto; }
+
+/* ─── Barre de recherche ─────────────────────────────────────────────────── */
+.annuaire-search-wrapper {
+  margin-bottom: 24px;
+}
+
+.annuaire-search {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-family: var(--fw-font);
+  border: 2px solid #c0d4f0;
+  border-radius: var(--fw-radius);
+  background-color: var(--fw-white);
+  color: var(--fw-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.annuaire-search:focus {
+  outline: none;
+  border-color: var(--fw-blue);
+  box-shadow: 0 0 0 3px rgba(26, 95, 168, 0.2);
+}
+
+/* ─── Catégories ─────────────────────────────────────────────────────────── */
+.annuaire-category {
+  margin-bottom: 28px;
+}
+
+.annuaire-category[hidden] { display: none; }
+
+.category-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--fw-blue);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--fw-blue-light);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+/* ─── Cartes de service ──────────────────────────────────────────────────── */
+.service-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background-color: var(--fw-white);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.service-card[hidden] { display: none; }
+
+.service-card:hover,
+.service-card:focus {
+  border-color: var(--fw-blue);
+  transform: translateY(-2px);
+  box-shadow: var(--fw-shadow);
+  outline: none;
+}
+
+.service-card-highlight {
+  background-color: #fff9e6;
+  border-color: #f0b429;
+}
+
+.service-card-highlight:hover {
+  border-color: #d49210;
+}
+
+.service-icon {
+  font-size: 32px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.service-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.service-info h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--fw-text);
+}
+
+.service-info p {
+  font-size: 13px;
+  color: var(--fw-gray);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.service-url {
+  display: inline-block;
+  font-family: 'Consolas', monospace;
+  font-size: 11px;
+  background-color: var(--fw-blue-light);
+  color: var(--fw-blue);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* ─── Aucun résultat ─────────────────────────────────────────────────────── */
+.annuaire-no-result {
+  text-align: center;
+  font-size: 15px;
+  color: var(--fw-gray);
+  padding: 30px;
+  background-color: var(--fw-white);
+  border-radius: var(--fw-radius);
+  box-shadow: var(--fw-shadow);
+}
+
+/* ─── Guide rapide intégré dans chaque carte ────────────────────────────── */
+.service-guide {
+  margin-top: 8px;
+  border-top: 1px dashed var(--fw-border);
+  padding-top: 6px;
+}
+
+.service-guide summary {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fw-blue);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.service-guide summary::before { content: '▶'; font-size: 10px; }
+.service-guide[open] summary::before { content: '▼'; }
+
+.service-guide ol {
+  margin-top: 8px;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.service-guide li {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--fw-text);
+}
+
+.service-guide code {
+  background: var(--fw-blue-light);
+  color: var(--fw-blue);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.annuaire-footer a { color: var(--fw-blue); }
+
+/* ─── Pied de page ───────────────────────────────────────────────────────── */
+.annuaire-footer {
+  max-width: 1200px;
+  margin: 28px auto 0;
+  padding: 18px 22px;
+  background-color: var(--fw-blue-light);
+  border-left: 4px solid var(--fw-blue);
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}

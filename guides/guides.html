@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini-guides pratiques — FaciliWeb</title>
+  <script src="../scripts/theme.js"></script>
+  <link rel="stylesheet" href="guides.css" />
+</head>
+<body>
+  <header class="guides-header">
+    <span class="guides-logo" aria-hidden="true">🖱️</span>
+    <div>
+      <h1>Mini-guides pratiques</h1>
+      <p class="guides-subtitle">Apprenez les gestes essentiels pour naviguer sur internet, étape par étape.</p>
+    </div>
+  </header>
+
+  <div class="guides-search-wrapper">
+    <input type="search" id="guides-search" class="guides-search"
+      placeholder="🔎 Rechercher un guide (ex : copier, traduire, imprimer…)"
+      aria-label="Rechercher un guide" autocomplete="off" />
+  </div>
+
+  <main class="guides-container" id="guides-container">
+
+    <!-- ─── Sélectionner et copier du texte ─── -->
+    <article class="guide-card" data-keywords="sélectionner copier texte souris clavier">
+      <h2 class="guide-title">📋 Sélectionner et copier du texte</h2>
+      <p class="guide-desc">Sur n'importe quelle page, vous pouvez copier un texte pour le coller ailleurs.</p>
+      <ol class="guide-steps">
+        <li>
+          <span class="step-num">1</span>
+          <div class="step-content">
+            <strong>Cliquez au début du texte</strong> que vous voulez copier et gardez le bouton enfoncé.
+            <div class="step-demo">
+              <span class="demo-text">Voici un <span class="demo-select">texte exemple</span> sur la page.</span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div class="step-content">
+            <strong>Faites glisser la souris</strong> jusqu'à la fin du texte voulu, puis relâchez. Le texte apparaît surligné en bleu.
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div class="step-content">
+            Appuyez sur <kbd>Ctrl</kbd> + <kbd>C</kbd> pour copier. Ou : <strong>clic droit</strong> sur la sélection → <em>"Copier"</em>.
+            <div class="step-demo step-demo-menu">
+              <div class="demo-ctx-menu">
+                <div class="demo-ctx-item">↪ Ouvrir dans un nouvel onglet</div>
+                <div class="demo-ctx-item highlight">📋 Copier</div>
+                <div class="demo-ctx-item">🔎 Rechercher "texte exemple"</div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div class="step-content">
+            Allez à l'endroit où coller (e-mail, formulaire…) et appuyez sur <kbd>Ctrl</kbd> + <kbd>V</kbd>.
+          </div>
+        </li>
+      </ol>
+      <div class="guide-tip">💡 <strong>Double-clic</strong> = sélectionne un mot entier. <strong>Triple-clic</strong> = sélectionne tout un paragraphe.</div>
+    </article>
+
+    <!-- ─── Clic droit ─── -->
+    <article class="guide-card" data-keywords="clic droit menu contextuel options">
+      <h2 class="guide-title">🖱️ Le clic droit : à quoi ça sert ?</h2>
+      <p class="guide-desc">Le bouton droit de la souris ouvre un menu avec des options selon l'endroit où vous cliquez.</p>
+      <ol class="guide-steps">
+        <li>
+          <span class="step-num">1</span>
+          <div class="step-content">
+            <strong>Clic droit sur du texte sélectionné</strong>
+            <div class="step-demo step-demo-menu">
+              <div class="demo-ctx-menu">
+                <div class="demo-ctx-item highlight">📋 Copier</div>
+                <div class="demo-ctx-item highlight">✂️ Couper</div>
+                <div class="demo-ctx-item">🔎 Rechercher...</div>
+                <div class="demo-ctx-item">🌍 Traduire...</div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div class="step-content">
+            <strong>Clic droit sur une image</strong>
+            <div class="step-demo step-demo-menu">
+              <div class="demo-ctx-menu">
+                <div class="demo-ctx-item highlight">💾 Enregistrer l'image sous...</div>
+                <div class="demo-ctx-item highlight">📋 Copier l'image</div>
+                <div class="demo-ctx-item">🔎 Rechercher cette image</div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div class="step-content">
+            <strong>Clic droit sur un lien</strong>
+            <div class="step-demo step-demo-menu">
+              <div class="demo-ctx-menu">
+                <div class="demo-ctx-item highlight">↗ Ouvrir dans un nouvel onglet</div>
+                <div class="demo-ctx-item">📋 Copier l'adresse du lien</div>
+                <div class="demo-ctx-item highlight">🛡️ FaciliWeb : Analyser ce lien</div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div class="step-content">
+            <strong>Clic droit sur la page (fond vide)</strong>
+            <div class="step-demo step-demo-menu">
+              <div class="demo-ctx-menu">
+                <div class="demo-ctx-item highlight">🌍 Traduire en français</div>
+                <div class="demo-ctx-item">🖨️ Imprimer...</div>
+                <div class="demo-ctx-item">💾 Enregistrer sous...</div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ol>
+      <div class="guide-tip">💡 Pour fermer le menu sans rien faire, appuyez sur <kbd>Échap</kbd> ou cliquez ailleurs.</div>
+    </article>
+
+    <!-- ─── Traduire une page ─── -->
+    <article class="guide-card" data-keywords="traduire page langue anglais traduction navigateur">
+      <h2 class="guide-title">🌍 Traduire une page web entière</h2>
+      <p class="guide-desc">Vous tombez sur un site en anglais ou dans une autre langue ? Le navigateur peut tout traduire en un clic.</p>
+      <ol class="guide-steps">
+        <li>
+          <span class="step-num">1</span>
+          <div class="step-content">
+            <strong>Méthode 1 — Barre d'adresse (Chrome) :</strong> Quand Chrome détecte une langue étrangère, un petit bouton <em>"Traduire"</em> apparaît à droite de la barre d'adresse. Cliquez dessus.
+            <div class="step-demo">
+              <div class="demo-addressbar">
+                <span class="demo-url">🔒 en.wikipedia.org/wiki/…</span>
+                <span class="demo-translate-btn">🌍 Traduire</span>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div class="step-content">
+            <strong>Méthode 2 — Clic droit :</strong> Faites un clic droit sur le fond de la page → <em>"Traduire en français"</em>.
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div class="step-content">
+            <strong>Méthode 3 — Google Traduction :</strong> Copiez l'adresse de la page (dans la barre d'adresse) et collez-la sur <a href="https://translate.google.fr/" target="_blank">translate.google.fr</a>.
+          </div>
+        </li>
+      </ol>
+      <div class="guide-tip">💡 Pour traduire juste un mot ou une phrase, sélectionnez-le → clic droit → <em>"Rechercher … sur Google"</em> ou copiez sur DeepL.</div>
+    </article>
+
+    <!-- ─── Recherche dans une page ─── -->
+    <article class="guide-card" data-keywords="rechercher trouver mot page ctrl f chercher">
+      <h2 class="guide-title">🔎 Trouver un mot sur une page</h2>
+      <p class="guide-desc">Sur une longue page, plutôt que de lire tout, demandez au navigateur de trouver le mot pour vous.</p>
+      <ol class="guide-steps">
+        <li>
+          <span class="step-num">1</span>
+          <div class="step-content">
+            Appuyez sur <kbd>Ctrl</kbd> + <kbd>F</kbd>. Une petite barre de recherche apparaît en haut à droite de la page.
+            <div class="step-demo">
+              <div class="demo-find-bar">
+                <span class="demo-find-input">remboursement</span>
+                <span class="demo-find-count">3 / 7</span>
+                <span class="demo-find-nav">↑ ↓</span>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div class="step-content">Tapez le mot à chercher. Les occurrences sont surlignées en jaune sur la page.</div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div class="step-content">Utilisez les flèches ↑ ↓ pour passer d'une occurrence à la suivante.</div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div class="step-content">Appuyez sur <kbd>Échap</kbd> pour fermer la barre de recherche.</div>
+        </li>
+      </ol>
+    </article>
+
+    <!-- ─── Ouvrir un lien dans un nouvel onglet ─── -->
+    <article class="guide-card" data-keywords="nouvel onglet lien ouvrir onglet sans quitter">
+      <h2 class="guide-title">🗂️ Ouvrir un lien sans quitter la page</h2>
+      <p class="guide-desc">Pour consulter un lien tout en gardant la page actuelle ouverte.</p>
+      <ol class="guide-steps">
+        <li><span class="step-num">1</span><div class="step-content"><strong>Méthode 1 :</strong> Clic droit sur le lien → <em>"Ouvrir dans un nouvel onglet"</em>.</div></li>
+        <li><span class="step-num">2</span><div class="step-content"><strong>Méthode 2 :</strong> Maintenez <kbd>Ctrl</kbd> enfoncé pendant que vous cliquez sur le lien.</div></li>
+        <li><span class="step-num">3</span><div class="step-content">Le lien s'ouvre dans un nouvel onglet. Basculez entre les onglets en cliquant sur leurs titres en haut du navigateur.</div></li>
+      </ol>
+      <div class="guide-tip">💡 Pour revenir à l'onglet précédent : appuyez sur <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Tab</kbd> (onglet précédent) ou <kbd>Ctrl</kbd> + <kbd>Tab</kbd> (onglet suivant).</div>
+    </article>
+
+    <!-- ─── Retrouver un onglet fermé ─── -->
+    <article class="guide-card" data-keywords="onglet fermé récupérer annuler fermeture">
+      <h2 class="guide-title">♻️ Récupérer un onglet fermé par erreur</h2>
+      <p class="guide-desc">Vous avez fermé un onglet par accident ? Il est récupérable !</p>
+      <ol class="guide-steps">
+        <li><span class="step-num">1</span><div class="step-content">Appuyez sur <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd> immédiatement après la fermeture.</div></li>
+        <li><span class="step-num">2</span><div class="step-content">L'onglet se rouvre à l'endroit exact où vous étiez.</div></li>
+        <li><span class="step-num">3</span><div class="step-content">Répétez la combinaison pour récupérer les onglets fermés encore plus tôt.</div></li>
+      </ol>
+      <div class="guide-tip">💡 Fonctionne aussi pour rouvrir plusieurs onglets fermés, dans l'ordre inverse de fermeture.</div>
+    </article>
+
+    <!-- ─── Zoomer ─── -->
+    <article class="guide-card" data-keywords="zoom agrandir texte police lisibilité accessibilité">
+      <h2 class="guide-title">🔍 Agrandir le texte d'une page</h2>
+      <p class="guide-desc">Si le texte est trop petit pour être lu confortablement, zoomez sur la page.</p>
+      <ol class="guide-steps">
+        <li><span class="step-num">1</span><div class="step-content">Appuyez sur <kbd>Ctrl</kbd> + <kbd>+</kbd> pour agrandir. Répétez jusqu'à la taille confortable.</div></li>
+        <li><span class="step-num">2</span><div class="step-content">Appuyez sur <kbd>Ctrl</kbd> + <kbd>−</kbd> pour réduire.</div></li>
+        <li><span class="step-num">3</span><div class="step-content">Appuyez sur <kbd>Ctrl</kbd> + <kbd>0</kbd> (zéro) pour revenir à la taille normale (100 %).</div></li>
+      </ol>
+      <div class="guide-tip">💡 Sur une souris avec molette : maintenez <kbd>Ctrl</kbd> et faites rouler la molette vers le haut pour zoomer, vers le bas pour dézoomer.</div>
+    </article>
+
+    <!-- ─── Imprimer ─── -->
+    <article class="guide-card" data-keywords="imprimer page document imprimante pdf">
+      <h2 class="guide-title">🖨️ Imprimer une page ou la sauvegarder en PDF</h2>
+      <p class="guide-desc">Imprimez une page ou enregistrez-la en PDF sans imprimante.</p>
+      <ol class="guide-steps">
+        <li><span class="step-num">1</span><div class="step-content">Appuyez sur <kbd>Ctrl</kbd> + <kbd>P</kbd> pour ouvrir la fenêtre d'impression.</div></li>
+        <li><span class="step-num">2</span><div class="step-content"><strong>Pour imprimer :</strong> sélectionnez votre imprimante dans la liste et cliquez "Imprimer".</div></li>
+        <li><span class="step-num">3</span><div class="step-content"><strong>Pour sauvegarder en PDF :</strong> dans la liste des imprimantes, choisissez <em>"Enregistrer au format PDF"</em>.</div></li>
+        <li><span class="step-num">4</span><div class="step-content">Choisissez où enregistrer le fichier et cliquez "Enregistrer".</div></li>
+      </ol>
+      <div class="guide-tip">💡 Avant d'imprimer, regardez l'aperçu pour éviter de gâcher du papier. Cochez "Arrière-plan" si les images n'apparaissent pas.</div>
+    </article>
+
+    <!-- ─── Enregistrer une image ─── -->
+    <article class="guide-card" data-keywords="image enregistrer télécharger sauvegarder photo">
+      <h2 class="guide-title">🖼️ Enregistrer une image</h2>
+      <p class="guide-desc">Téléchargez une image trouvée sur internet sur votre ordinateur.</p>
+      <ol class="guide-steps">
+        <li><span class="step-num">1</span><div class="step-content"><strong>Clic droit</strong> sur l'image.</div></li>
+        <li><span class="step-num">2</span><div class="step-content">Choisissez <em>"Enregistrer l'image sous…"</em>.</div></li>
+        <li><span class="step-num">3</span><div class="step-content">Une fenêtre s'ouvre : choisissez le dossier de destination (ex : Bureau, Images).</div></li>
+        <li><span class="step-num">4</span><div class="step-content">Cliquez "Enregistrer". L'image est maintenant sur votre ordinateur.</div></li>
+      </ol>
+      <div class="guide-tip">⚠️ Vérifiez les droits d'auteur avant de réutiliser une image trouvée sur internet.</div>
+    </article>
+
+    <!-- ─── Capture d'écran ─── -->
+    <article class="guide-card" data-keywords="capture écran screenshot photo écran imprécran">
+      <h2 class="guide-title">📸 Faire une capture d'écran</h2>
+      <p class="guide-desc">Photographiez ce qui est affiché sur votre écran pour le partager ou le garder.</p>
+      <ol class="guide-steps">
+        <li><span class="step-num">1</span><div class="step-content"><strong>Tout l'écran :</strong> appuyez sur la touche <kbd>Impr. écran</kbd> (parfois notée <kbd>PrtScn</kbd>). L'image est copiée dans le presse-papiers. Collez-la dans un e-mail ou un document avec <kbd>Ctrl</kbd>+<kbd>V</kbd>.</div></li>
+        <li><span class="step-num">2</span><div class="step-content"><strong>Fenêtre active uniquement :</strong> <kbd>Alt</kbd> + <kbd>Impr. écran</kbd> — capture seulement la fenêtre ouverte.</div></li>
+        <li><span class="step-num">3</span><div class="step-content"><strong>Sélection libre (Windows 10/11) :</strong> <kbd>Windows</kbd> + <kbd>Maj</kbd> + <kbd>S</kbd> — un outil s'ouvre pour sélectionner la zone à capturer.</div></li>
+        <li><span class="step-num">4</span><div class="step-content">Les captures sont aussi sauvegardées automatiquement dans le dossier <em>Images → Captures d'écran</em>.</div></li>
+      </ol>
+    </article>
+
+    <!-- ─── Vider le cache ─── -->
+    <article class="guide-card" data-keywords="cache cookies vider nettoyer historique lent navigateur">
+      <h2 class="guide-title">🧹 Vider le cache (si le site est lent ou bloqué)</h2>
+      <p class="guide-desc">Quand un site ne se charge pas correctement, vider le cache règle souvent le problème.</p>
+      <ol class="guide-steps">
+        <li><span class="step-num">1</span><div class="step-content">Appuyez sur <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Suppr</kbd> pour ouvrir le menu de nettoyage.</div></li>
+        <li><span class="step-num">2</span><div class="step-content">Cochez au minimum : <em>"Cookies et autres données de site"</em> et <em>"Images et fichiers en cache"</em>.</div></li>
+        <li><span class="step-num">3</span><div class="step-content">Choisissez la période : <em>"Toute la période"</em> pour un nettoyage complet.</div></li>
+        <li><span class="step-num">4</span><div class="step-content">Cliquez "Effacer les données", puis rechargez la page avec <kbd>F5</kbd>.</div></li>
+      </ol>
+      <div class="guide-tip">⚠️ Vous serez déconnecté des sites où vous étiez connecté. Ayez vos mots de passe à portée.</div>
+    </article>
+
+    <!-- ─── Marque-page ─── -->
+    <article class="guide-card" data-keywords="favori marque page bookmark mémoriser retrouver site">
+      <h2 class="guide-title">⭐ Ajouter un site en favoris (marque-page)</h2>
+      <p class="guide-desc">Retrouvez facilement un site sans avoir à retaper son adresse.</p>
+      <ol class="guide-steps">
+        <li><span class="step-num">1</span><div class="step-content">Allez sur la page que vous voulez mémoriser.</div></li>
+        <li><span class="step-num">2</span><div class="step-content">Appuyez sur <kbd>Ctrl</kbd> + <kbd>D</kbd>, ou cliquez sur l'étoile ⭐ à droite de la barre d'adresse.</div></li>
+        <li><span class="step-num">3</span><div class="step-content">Donnez un nom au favori si besoin et choisissez le dossier. Cliquez "Terminé".</div></li>
+        <li><span class="step-num">4</span><div class="step-content">Pour retrouver vos favoris : appuyez sur <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>O</kbd> ou cliquez sur ⭐ dans la barre latérale.</div></li>
+      </ol>
+    </article>
+
+  </main>
+
+  <footer class="guides-footer">
+    <p>💡 Voir aussi : <a href="../shortcuts/shortcuts.html">Les raccourcis clavier essentiels</a> · <a href="../annuaire/annuaire.html">L'annuaire des sites utiles</a> · <a href="../help/help.html">Aide FaciliWeb</a></p>
+  </footer>
+
+  <script src="guides.js"></script>
+</body>
+</html>

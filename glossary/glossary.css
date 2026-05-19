@@ -1,0 +1,323 @@
+/* Glossaire visuel des arnaques — Conception accessible, lisible, contrastes élevés */
+
+:root,
+:root[data-theme="light"] {
+  --fw-blue: #1a5fa8;
+  --fw-blue-dark: #0d3a6e;
+  --fw-blue-light: #e8f0fb;
+  --fw-red: #c0392b;
+  --fw-red-light: #fff5f5;
+  --fw-orange: #d4640a;
+  --fw-green: #1a7a4a;
+  --fw-green-light: #d4edda;
+  --fw-gray: #6c757d;
+  --fw-gray-light: #f4f6f8;
+  --fw-white: #ffffff;
+  --fw-text: #1a1a2e;
+  --fw-bg-body: #f0f2f5;
+  --fw-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --fw-radius: 12px;
+  --fw-font: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --fw-blue: #4f9ce5;
+  --fw-blue-dark: #2a6fb0;
+  --fw-blue-light: #1e2c45;
+  --fw-red: #ff6b5e;
+  --fw-red-light: #3a1f1f;
+  --fw-orange: #e89540;
+  --fw-green: #5ad394;
+  --fw-green-light: #1d3b2b;
+  --fw-gray: #9aa0aa;
+  --fw-gray-light: #2a2f3a;
+  --fw-white: #2a2f3a;
+  --fw-text: #e8e8ee;
+  --fw-bg-body: #15171c;
+  --fw-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fw-font);
+  font-size: 16px;
+  color: var(--fw-text);
+  background-color: var(--fw-bg-body);
+  padding: 24px 16px 40px;
+  min-height: 100vh;
+}
+
+/* ─── En-tête ─────────────────────────────────────────────────────────────── */
+.glossary-header {
+  max-width: 1200px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, var(--fw-blue), var(--fw-blue-dark));
+  color: var(--fw-white);
+  padding: 24px 28px;
+  border-radius: var(--fw-radius);
+  box-shadow: var(--fw-shadow);
+}
+
+.glossary-logo { font-size: 44px; line-height: 1; }
+.glossary-header h1 { font-size: 24px; font-weight: 700; }
+.glossary-subtitle { font-size: 14px; opacity: 0.92; margin-top: 4px; }
+
+/* ─── Grille des cartes ──────────────────────────────────────────────────── */
+.glossary-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 22px;
+}
+
+.scam-card {
+  background-color: var(--fw-white);
+  border-radius: var(--fw-radius);
+  padding: 22px;
+  box-shadow: var(--fw-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.scam-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--fw-blue);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--fw-blue-light);
+}
+
+.scam-desc {
+  font-size: 14px;
+  color: var(--fw-gray);
+  line-height: 1.5;
+}
+
+/* ─── Mockup générique ───────────────────────────────────────────────────── */
+.mockup {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: var(--fw-gray-light);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── Mockup email ───────────────────────────────────────────────────────── */
+.mockup-email-header {
+  background-color: #fafafa;
+  padding: 10px 14px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mockup-from, .mockup-subject {
+  font-size: 12px;
+  word-break: break-word;
+}
+
+.mockup-subject {
+  font-weight: bold;
+  color: var(--fw-text);
+}
+
+.mockup-email-body {
+  padding: 14px;
+  background-color: var(--fw-white);
+}
+
+.mockup-email-body p { margin-bottom: 8px; }
+
+.mockup-link {
+  color: var(--fw-blue);
+  word-break: break-all;
+  text-decoration: underline;
+}
+
+/* ─── Mockup SMS ─────────────────────────────────────────────────────────── */
+.mockup-sms {
+  padding: 16px;
+  background-color: #d9e8f5;
+}
+
+.mockup-sms-bubble {
+  background-color: var(--fw-white);
+  border-radius: 18px;
+  padding: 12px 16px;
+  max-width: 90%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mockup-sms-bubble p { margin-bottom: 4px; }
+
+/* ─── Mockup popup ───────────────────────────────────────────────────────── */
+.mockup-popup {
+  background-color: #2a2a2a;
+  padding: 20px;
+}
+
+.mockup-popup-window {
+  background-color: var(--fw-white);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.mockup-popup-bar {
+  background-color: var(--fw-red);
+  color: var(--fw-white);
+  padding: 8px 14px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.mockup-popup-body {
+  padding: 16px;
+  text-align: center;
+}
+
+.mockup-popup-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--fw-red);
+  margin-bottom: 10px;
+}
+
+.mockup-phone {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--fw-blue);
+  margin-top: 8px;
+}
+
+.mockup-btn {
+  margin-top: 12px;
+  padding: 10px 20px;
+  background-color: #ff5722;
+  color: var(--fw-white);
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: var(--fw-font);
+}
+
+/* ─── Annotations (numéros rouges) ───────────────────────────────────────── */
+.annotation {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background-color: var(--fw-red);
+  color: var(--fw-white);
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  margin: 0 3px;
+  cursor: help;
+  border: 2px solid var(--fw-white);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.annotation:focus {
+  outline: 3px solid var(--fw-blue);
+  outline-offset: 2px;
+}
+
+/* ─── Indices ────────────────────────────────────────────────────────────── */
+.scam-indicators {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--fw-red-light);
+  border-left: 4px solid var(--fw-red);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+}
+
+.scam-indicators li {
+  font-size: 13px;
+  line-height: 1.5;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.indicator-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--fw-red);
+  color: var(--fw-white);
+  font-weight: bold;
+  font-size: 11px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.scam-indicators code {
+  background-color: rgba(0, 0, 0, 0.07);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: 'Consolas', monospace;
+  font-size: 12px;
+}
+
+/* ─── Action recommandée ─────────────────────────────────────────────────── */
+.scam-action {
+  background-color: var(--fw-green-light);
+  border-left: 4px solid var(--fw-green);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #155724;
+}
+
+.scam-action code {
+  background-color: rgba(0, 0, 0, 0.07);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: 'Consolas', monospace;
+  font-size: 12px;
+}
+
+/* ─── Pied de page ───────────────────────────────────────────────────────── */
+.glossary-footer {
+  max-width: 1200px;
+  margin: 28px auto 0;
+  padding: 18px 22px;
+  background-color: #fff9e6;
+  border-left: 4px solid #f0b429;
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.glossary-footer code {
+  background-color: rgba(0, 0, 0, 0.07);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: 'Consolas', monospace;
+  font-size: 13px;
+}

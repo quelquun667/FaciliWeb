@@ -1,0 +1,43 @@
+name: Lint & Validate
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-manifest:
+    name: Valider le manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Valider le JSON du manifest
+        run: |
+          python3 -c "import json, sys; json.load(open('manifest.json')); print('manifest.json valide')"
+
+      - name: Valider les fichiers de traduction
+        run: |
+          python3 -c "import json; json.load(open('_locales/fr/messages.json')); print('fr/messages.json valide')"
+          python3 -c "import json; json.load(open('_locales/en/messages.json')); print('en/messages.json valide')"
+
+  lint-js:
+    name: Lint JavaScript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer ESLint
+        run: npm install --save-dev eslint@8
+
+      - name: Linter les scripts
+        run: |
+          npx eslint scripts/helpers.js scripts/content.js scripts/background.js popup/popup.js settings/settings.js --env browser,es2020 --parser-options=ecmaVersion:2020 --rule '{"no-eval": "error", "no-undef": "warn"}'

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenue sur FaciliWeb</title>
+  <script src="../scripts/theme.js"></script>
+  <link rel="stylesheet" href="onboarding.css" />
+</head>
+<body>
+  <div class="ob-shell">
+
+    <!-- Barre de progression -->
+    <div class="ob-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="ob-progress-fill" id="ob-progress-fill"></div>
+    </div>
+
+    <!-- Slides -->
+    <div class="ob-slides" id="ob-slides">
+
+      <!-- 0 : Bienvenue -->
+      <div class="ob-slide active" data-slide="0">
+        <span class="ob-slide-icon">🛡️</span>
+        <h1>Bienvenue sur FaciliWeb !</h1>
+        <p class="ob-slide-lead">Votre assistant numérique pour naviguer <strong>plus sûrement</strong> et <strong>plus facilement</strong> sur internet.</p>
+        <p>Ce court tutoriel vous présente les fonctionnalités principales. Vous pouvez le parcourir à votre rythme.</p>
+      </div>
+
+      <!-- 1 : Anti-phishing -->
+      <div class="ob-slide" data-slide="1">
+        <span class="ob-slide-icon">🛡️</span>
+        <h2>Protection anti-hameçonnage</h2>
+        <div class="ob-demo ob-demo-danger">
+          <div class="ob-demo-bar">⚠️ ATTENTION — Site suspect détecté !</div>
+          <div class="ob-demo-body">
+            <p>FaciliWeb vérifie chaque site visité contre une liste de sites frauduleux, <strong>mise à jour automatiquement toutes les 6 heures</strong>.</p>
+            <p>Si le site est suspect, une grande alerte rouge apparaît avec deux boutons : <em>Retourner en sécurité</em> ou <em>Continuer quand même</em>.</p>
+          </div>
+        </div>
+        <p class="ob-tip">💡 La liste contient des milliers de domaines de phishing connus. Elle se met à jour en arrière-plan, sans rien à faire de votre côté.</p>
+      </div>
+
+      <!-- 2 : Vérificateur d'orthographe -->
+      <div class="ob-slide" data-slide="2">
+        <span class="ob-slide-icon">🔤</span>
+        <h2>Vérificateur d'adresse internet</h2>
+        <div class="ob-demo ob-demo-warn">
+          <p>Vous êtes sur <code class="bad">paypa1.com</code>. Vouliez-vous dire <code class="good">paypal.com</code> ?</p>
+          <button class="ob-demo-btn">Aller sur paypal.com</button>
+        </div>
+        <p>Si l'adresse d'un site ressemble à celle d'un site officiel mais avec une lettre de différence, FaciliWeb vous le signale avec une bannière et propose d'y aller directement.</p>
+        <p class="ob-tip">💡 Les arnaques utilisent souvent des variantes proches : <em>amaz0n.fr</em>, <em>impots-gouv.net</em>…</p>
+      </div>
+
+      <!-- 3 : Identifiants -->
+      <div class="ob-slide" data-slide="3">
+        <span class="ob-slide-icon">🔑</span>
+        <h2>Gestionnaire d'identifiants sécurisé</h2>
+        <div class="ob-features-list">
+          <div class="ob-feat">🔐 <strong>Coffre chiffré</strong> — vos mots de passe sont protégés par un mot de passe maître que vous seul connaissez.</div>
+          <div class="ob-feat">🎲 <strong>Générateur</strong> — créez des mots de passe forts en un clic.</div>
+          <div class="ob-feat">💾 <strong>Sauvegarde automatique</strong> — FaciliWeb propose d'enregistrer vos identifiants quand vous vous connectez.</div>
+          <div class="ob-feat">⚡ <strong>Remplissage automatique</strong> — cliquez dans le champ identifiant, une bulle propose vos identifiants enregistrés.</div>
+          <div class="ob-feat">📤 <strong>Import / Export</strong> — transférez vos données d'un appareil à l'autre.</div>
+        </div>
+        <p class="ob-tip">💡 Accès depuis la popup → onglet Outils → "🔑 Mes identifiants".</p>
+      </div>
+
+      <!-- 4 : Indicateurs visuels -->
+      <div class="ob-slide" data-slide="4">
+        <span class="ob-slide-icon">🧰</span>
+        <h2>Outils visuels</h2>
+        <div class="ob-features-list">
+          <div class="ob-feat">🔠 <strong>Alerte Majuscules</strong> — un petit badge orange 🔒A apparaît à droite du champ si Verr. Maj. est actif.</div>
+          <div class="ob-feat">📊 <strong>Force du mot de passe</strong> — une barre colorée apparaît sous chaque champ de mot de passe pour indiquer sa robustesse.</div>
+          <div class="ob-feat">✨ <strong>Caractères spéciaux</strong> — bouton flottant @€# en bas à droite pour insérer @, €, #, accents, etc. avec guide clavier.</div>
+          <div class="ob-feat">📖 <strong>Traducteur de jargon</strong> — survolez un terme technique souligné en pointillé pour lire sa définition en langage simple.</div>
+        </div>
+      </div>
+
+      <!-- 5 : Pièces jointes & Captcha -->
+      <div class="ob-slide" data-slide="5">
+        <span class="ob-slide-icon">📎</span>
+        <h2>Sécurité en navigation</h2>
+        <div class="ob-features-list">
+          <div class="ob-feat">📎 <strong>Pièces jointes dangereuses</strong> — les liens vers des fichiers .exe, .zip, .scr, etc. sont signalés par un badge ⚠️ au survol.</div>
+          <div class="ob-feat">🤖 <strong>Détecteur de captcha</strong> — si un test "je ne suis pas un robot" apparaît, FaciliWeb vous explique que c'est normal.</div>
+          <div class="ob-feat">🔎 <strong>Décomposition d'URL</strong> — dans la popup, visualisez chaque partie de l'adresse du site avec un code couleur et une explication.</div>
+          <div class="ob-feat">🔓 <strong>Alerte fuite de données</strong> — vérifiez si votre email est apparu dans une fuite de données via un service sécurisé.</div>
+        </div>
+      </div>
+
+      <!-- 6 : Bien-être & outils pratiques -->
+      <div class="ob-slide" data-slide="6">
+        <span class="ob-slide-icon">⏰</span>
+        <h2>Bien-être & outils pratiques</h2>
+        <div class="ob-features-list">
+          <div class="ob-feat">⏰ <strong>Pause écran</strong> — une notification toutes les X minutes vous rappelle de reposer vos yeux. Durée réglable.</div>
+          <div class="ob-feat">📝 <strong>Carnet de notes</strong> — notez un code, un mot de passe temporaire, une adresse. Sauvegardé automatiquement.</div>
+          <div class="ob-feat">🏛️ <strong>Annuaire des services publics</strong> — accédez directement aux sites officiels (Impôts, CAF, Ameli…) sans risque de faute de frappe.</div>
+          <div class="ob-feat">📊 <strong>Résumé hebdomadaire</strong> — chaque semaine, découvrez vos 3 sites les plus visités.</div>
+          <div class="ob-feat">⌨️ <strong>Raccourcis clavier</strong> — une page dédiée pour apprendre les raccourcis essentiels (Ctrl+C, Ctrl+V, Ctrl+Z…).</div>
+        </div>
+      </div>
+
+      <!-- 7 : Paramètres -->
+      <div class="ob-slide" data-slide="7">
+        <span class="ob-slide-icon">⚙️</span>
+        <h2>Personnalisation complète</h2>
+        <p>Toutes les fonctionnalités peuvent être <strong>activées ou désactivées</strong> dans l'onglet <em>Paramètres</em> de la popup (clic sur l'icône 🛡️ dans la barre d'outils).</p>
+        <div class="ob-settings-preview">
+          <div class="ob-setting-row"><span>🌙 Thème sombre</span><span class="ob-toggle">○</span></div>
+          <div class="ob-setting-row"><span>🛡️ Anti-hameçonnage</span><span class="ob-toggle on">●</span></div>
+          <div class="ob-setting-row"><span>📖 Traducteur de jargon</span><span class="ob-toggle on">●</span></div>
+          <div class="ob-setting-row"><span>📎 Pièces jointes</span><span class="ob-toggle on">●</span></div>
+        </div>
+        <p class="ob-tip">💡 Vous retrouverez également le <strong>Glossaire des arnaques</strong> et la page <strong>Aide & fonctionnement</strong> depuis l'onglet Outils.</p>
+      </div>
+
+      <!-- 8 : Terminé -->
+      <div class="ob-slide" data-slide="8">
+        <span class="ob-slide-icon">🎉</span>
+        <h1>Vous êtes prêt !</h1>
+        <p class="ob-slide-lead">FaciliWeb veille sur votre navigation en toute discrétion.</p>
+        <p>Cliquez sur l'icône 🛡️ dans la barre d'outils de votre navigateur pour accéder à la popup à tout moment.</p>
+        <button id="btn-finish" class="btn btn-primary btn-big">✅ Commencer à naviguer</button>
+      </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <footer class="ob-nav">
+      <button id="btn-prev" class="btn btn-secondary" disabled>← Précédent</button>
+      <div class="ob-dots" id="ob-dots" role="tablist" aria-label="Étapes du tutoriel"></div>
+      <button id="btn-next" class="btn btn-primary">Suivant →</button>
+    </footer>
+
+  </div>
+
+  <script src="onboarding.js"></script>
+</body>
+</html>
