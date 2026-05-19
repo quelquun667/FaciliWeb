@@ -52,6 +52,15 @@ jobs:
             annuaire/annuaire.js \
             guides/guides.js \
             onboarding/onboarding.js \
-            --env browser,es2020 \
-            --parser-options=ecmaVersion:2020 \
-            --rule '{"no-eval": "error", "no-undef": "warn"}'
+            --env browser,es2021 \
+            --parser-options=ecmaVersion:2021 \
+            --global chrome \
+            --global FW_GENERATOR \
+            --global FW_CRYPTO \
+            --global FW_CREATOR \
+            --global getSettings \
+            --global createElement \
+            --global isSensitiveField \
+            --global escapeText \
+            --global isDomainBlacklisted \
+            --rule '{"no-eval": "error", "no-undef": "error"}'
