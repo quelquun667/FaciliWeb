@@ -26,3 +26,8 @@ npm-debug.log*
 *.zip
 *.crx
 *.pem
+
+# Fichiers générés par le workflow de release (temporaires)
+RELEASE_NOTES.md
+manifest.tmp
+CHANGELOG.tmp
