@@ -1,0 +1,190 @@
+/* Page d'aide — FaciliWeb */
+
+:root,
+:root[data-theme="light"] {
+  --fw-bg: #f0f2f5;
+  --fw-section: #ffffff;
+  --fw-text: #1a1a2e;
+  --fw-text-soft: #6c757d;
+  --fw-border: #e0e0e0;
+  --fw-blue: #1a5fa8;
+  --fw-blue-dark: #0d3a6e;
+  --fw-blue-light: #e8f0fb;
+  --fw-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --fw-font: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --fw-bg: #15171c;
+  --fw-section: #2a2f3a;
+  --fw-text: #e8e8ee;
+  --fw-text-soft: #9aa0aa;
+  --fw-border: #3a3f4a;
+  --fw-blue: #4f9ce5;
+  --fw-blue-dark: #2a6fb0;
+  --fw-blue-light: #1e2c45;
+  --fw-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--fw-font);
+  font-size: 16px;
+  color: var(--fw-text);
+  background-color: var(--fw-bg);
+  padding: 24px 16px 40px;
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.help-header {
+  max-width: 900px;
+  margin: 0 auto 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, var(--fw-blue), var(--fw-blue-dark));
+  color: #fff;
+  padding: 24px 28px;
+  border-radius: 12px;
+  box-shadow: var(--fw-shadow);
+}
+
+.help-logo { font-size: 44px; line-height: 1; }
+.help-header h1 { font-size: 24px; }
+.help-subtitle { font-size: 14px; opacity: 0.92; margin-top: 4px; }
+
+/* ─── Sommaire ─── */
+.help-toc {
+  max-width: 900px;
+  margin: 0 auto 22px;
+  background-color: var(--fw-section);
+  padding: 14px 20px;
+  border-radius: 10px;
+  box-shadow: var(--fw-shadow);
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.help-toc strong {
+  color: var(--fw-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-size: 12px;
+}
+
+.help-toc a {
+  color: var(--fw-blue);
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid var(--fw-border);
+  border-radius: 6px;
+  font-size: 13px;
+  transition: background-color 0.15s;
+}
+
+.help-toc a:hover { background-color: var(--fw-blue-light); }
+
+/* ─── Cartes d'aide ─── */
+.help-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.help-card {
+  background-color: var(--fw-section);
+  border-radius: 12px;
+  padding: 22px 26px;
+  box-shadow: var(--fw-shadow);
+  scroll-margin-top: 12px;
+}
+
+.help-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--fw-blue);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--fw-blue-light);
+}
+
+.help-card p,
+.help-card ul {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--fw-text);
+}
+
+.help-card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.help-card li {
+  margin-bottom: 6px;
+  padding-left: 22px;
+  position: relative;
+}
+
+.help-card li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--fw-blue);
+  font-weight: bold;
+}
+
+.help-card code {
+  background-color: var(--fw-blue-light);
+  color: var(--fw-blue);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-size: 13px;
+}
+
+.help-card kbd {
+  background-color: var(--fw-section);
+  border: 1px solid var(--fw-border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'Consolas', monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.help-card em { color: var(--fw-text-soft); font-style: italic; }
+
+.color-chip {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.help-card a {
+  color: var(--fw-blue);
+  text-decoration: underline;
+}
+
+/* ─── Pied de page ─── */
+.help-footer {
+  max-width: 900px;
+  margin: 22px auto 0;
+  padding: 18px 22px;
+  background-color: var(--fw-blue-light);
+  border-left: 4px solid var(--fw-blue);
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+}
+
+.help-footer a { color: var(--fw-blue); }

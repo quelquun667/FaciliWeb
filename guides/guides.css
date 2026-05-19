@@ -1,0 +1,274 @@
+/* Mini-guides pratiques — FaciliWeb */
+
+:root,
+:root[data-theme="light"] {
+  --fw-bg: #f0f2f5; --fw-section: #ffffff; --fw-text: #1a1a2e;
+  --fw-text-soft: #6c757d; --fw-border: #e0e0e0;
+  --fw-blue: #1a5fa8; --fw-blue-dark: #0d3a6e; --fw-blue-light: #e8f0fb;
+  --fw-green: #1a7a4a; --fw-green-light: #d4edda;
+  --fw-shadow: 0 4px 16px rgba(0,0,0,.1);
+  --fw-font: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --fw-bg: #15171c; --fw-section: #2a2f3a; --fw-text: #e8e8ee;
+  --fw-text-soft: #9aa0aa; --fw-border: #3a3f4a;
+  --fw-blue: #4f9ce5; --fw-blue-dark: #2a6fb0; --fw-blue-light: #1e2c45;
+  --fw-green: #5ad394; --fw-green-light: #1d3b2b;
+  --fw-shadow: 0 4px 20px rgba(0,0,0,.5);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--fw-font);
+  font-size: 16px;
+  color: var(--fw-text);
+  background-color: var(--fw-bg);
+  padding: 24px 16px 40px;
+  min-height: 100vh;
+}
+
+.guides-header {
+  max-width: 980px;
+  margin: 0 auto 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, var(--fw-blue), var(--fw-blue-dark));
+  color: #fff;
+  padding: 24px 28px;
+  border-radius: 12px;
+  box-shadow: var(--fw-shadow);
+}
+
+.guides-logo { font-size: 44px; }
+.guides-header h1 { font-size: 24px; }
+.guides-subtitle { font-size: 14px; opacity: .9; margin-top: 4px; line-height: 1.4; }
+
+.guides-search-wrapper { max-width: 980px; margin: 0 auto 22px; }
+.guides-search {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-family: var(--fw-font);
+  border: 2px solid var(--fw-border);
+  border-radius: 12px;
+  background: var(--fw-section);
+  color: var(--fw-text);
+}
+.guides-search:focus { outline: none; border-color: var(--fw-blue); }
+
+.guides-container {
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+  gap: 20px;
+}
+
+/* ─── Cartes de guide ─── */
+.guide-card {
+  background: var(--fw-section);
+  border-radius: 12px;
+  padding: 22px 24px;
+  box-shadow: var(--fw-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.guide-card[hidden] { display: none; }
+
+.guide-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--fw-blue);
+}
+
+.guide-desc {
+  font-size: 13px;
+  color: var(--fw-text-soft);
+  line-height: 1.5;
+}
+
+/* ─── Étapes ─── */
+.guide-steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.guide-steps li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.step-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background: var(--fw-blue);
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.step-content {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--fw-text);
+}
+
+/* ─── Démo visuelle simulée ─── */
+.step-demo {
+  margin-top: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.demo-text {
+  background: var(--fw-bg);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  display: block;
+  border: 1px solid var(--fw-border);
+}
+
+.demo-select {
+  background: #acd4f7;
+  color: #0d3a6e;
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+/* Simulation de menu contextuel */
+.step-demo-menu { display: block; }
+
+.demo-ctx-menu {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  width: 280px;
+  font-size: 13px;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .demo-ctx-menu { background: #2a2f3a; border-color: #444; }
+
+.demo-ctx-item {
+  padding: 8px 14px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  white-space: nowrap;
+}
+
+[data-theme="dark"] .demo-ctx-item { color: #ddd; border-color: #3a3f4a; }
+
+.demo-ctx-item:last-child { border-bottom: none; }
+.demo-ctx-item.highlight { background: var(--fw-blue-light); font-weight: 600; color: var(--fw-blue); }
+
+/* Simulation barre d'adresse */
+.demo-addressbar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px 14px;
+  gap: 12px;
+  font-size: 13px;
+  width: 100%;
+}
+
+[data-theme="dark"] .demo-addressbar { background: #1f232b; border-color: #444; }
+
+.demo-url { flex: 1; color: var(--fw-text-soft); }
+.demo-translate-btn {
+  background: var(--fw-blue);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* Simulation barre de recherche Ctrl+F */
+.demo-find-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--fw-section);
+  border: 2px solid var(--fw-blue);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  width: fit-content;
+}
+
+.demo-find-input {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 13px;
+  color: var(--fw-text);
+  min-width: 120px;
+}
+
+.demo-find-count { color: var(--fw-text-soft); font-size: 12px; }
+.demo-find-nav { color: var(--fw-blue); font-weight: bold; letter-spacing: 4px; }
+
+/* ─── Astuce ─── */
+.guide-tip {
+  background: #fffbe6;
+  border-left: 4px solid #f0b429;
+  padding: 10px 14px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: #5a4200;
+  line-height: 1.5;
+}
+
+[data-theme="dark"] .guide-tip { background: #3a3020; color: #e0c070; }
+
+kbd {
+  display: inline-block;
+  background: var(--fw-section);
+  border: 2px solid var(--fw-border);
+  border-bottom: 4px solid var(--fw-border);
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--fw-text);
+  white-space: nowrap;
+}
+
+a { color: var(--fw-blue); }
+
+.guides-footer {
+  max-width: 980px;
+  margin: 24px auto 0;
+  padding: 16px 20px;
+  background: var(--fw-blue-light);
+  border-left: 4px solid var(--fw-blue);
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.guides-footer a { color: var(--fw-blue); margin: 0 4px; }

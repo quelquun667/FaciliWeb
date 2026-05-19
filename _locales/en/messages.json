@@ -1,0 +1,162 @@
+{
+  "extensionName": {
+    "message": "FaciliWeb",
+    "description": "Extension name"
+  },
+  "extensionDescription": {
+    "message": "Make web browsing safer and simpler.",
+    "description": "Extension description"
+  },
+  "popupTitle": {
+    "message": "FaciliWeb",
+    "description": "Popup title"
+  },
+  "popupSubtitle": {
+    "message": "Your digital assistant",
+    "description": "Popup subtitle"
+  },
+  "featuresTitle": {
+    "message": "Active features",
+    "description": "Features section title"
+  },
+  "featureCapsLock": {
+    "message": "Caps Lock Alert",
+    "description": "Caps lock detection feature name"
+  },
+  "featureHighlight": {
+    "message": "Field Highlighter",
+    "description": "Field highlighting feature name"
+  },
+  "featureSpecialChars": {
+    "message": "Special Characters",
+    "description": "Special characters feature name"
+  },
+  "featurePhishing": {
+    "message": "Anti-Phishing Protection",
+    "description": "Anti-phishing feature name"
+  },
+  "featureJargon": {
+    "message": "Jargon Translator",
+    "description": "Jargon translation feature name"
+  },
+  "goldenRulesTitle": {
+    "message": "Golden Rules",
+    "description": "Golden rules section title"
+  },
+  "goldenRule1": {
+    "message": "Never give your password via email or phone.",
+    "description": "Golden rule number 1"
+  },
+  "goldenRule2": {
+    "message": "Always check the website address before logging in.",
+    "description": "Golden rule number 2"
+  },
+  "goldenRule3": {
+    "message": "Be wary of urgent messages demanding immediate action.",
+    "description": "Golden rule number 3"
+  },
+  "goldenRule4": {
+    "message": "A real organisation will never ask for your bank card code over the phone.",
+    "description": "Golden rule number 4"
+  },
+  "goldenRule5": {
+    "message": "If an offer seems too good to be true, it probably is a scam.",
+    "description": "Golden rule number 5"
+  },
+  "settingsTitle": {
+    "message": "FaciliWeb Settings",
+    "description": "Settings page title"
+  },
+  "settingsLanguage": {
+    "message": "Language",
+    "description": "Language selection option"
+  },
+  "settingsReset": {
+    "message": "Reset all data",
+    "description": "Reset button"
+  },
+  "settingsResetConfirm": {
+    "message": "Are you sure? All your data will be deleted.",
+    "description": "Reset confirmation message"
+  },
+  "settingsSaved": {
+    "message": "Settings saved!",
+    "description": "Save confirmation message"
+  },
+  "contextMenuAnalyzeLink": {
+    "message": "FaciliWeb: Analyse this link",
+    "description": "Context menu option to analyse a link"
+  },
+  "dangerZoneTitle": {
+    "message": "⚠️ WARNING — Suspicious site detected!",
+    "description": "Danger alert title"
+  },
+  "dangerZoneMessage": {
+    "message": "This site may be a phishing attempt. It is strongly advised NOT to continue.",
+    "description": "Danger alert message"
+  },
+  "dangerZoneBack": {
+    "message": "Go back to safety",
+    "description": "Button to leave the suspicious site"
+  },
+  "dangerZoneContinue": {
+    "message": "I understand the risk, continue anyway",
+    "description": "Button to continue despite the risk"
+  },
+  "capsLockWarning": {
+    "message": "⚠️ CAPS LOCK is ON!",
+    "description": "Caps lock warning"
+  },
+  "specialCharsTitle": {
+    "message": "Insert a special character",
+    "description": "Special characters panel title"
+  },
+  "specialCharsHint": {
+    "message": "Click a character to insert it into your text.",
+    "description": "Special characters usage hint"
+  },
+  "passwordManagerTitle": {
+    "message": "My Credentials",
+    "description": "Password manager title"
+  },
+  "passwordManagerAdd": {
+    "message": "Add credentials",
+    "description": "Add credentials button"
+  },
+  "passwordManagerSite": {
+    "message": "Website",
+    "description": "Website field"
+  },
+  "passwordManagerUsername": {
+    "message": "Username",
+    "description": "Username field"
+  },
+  "passwordManagerPassword": {
+    "message": "Password",
+    "description": "Password field"
+  },
+  "passwordManagerSave": {
+    "message": "Save",
+    "description": "Save button"
+  },
+  "passwordManagerCancel": {
+    "message": "Cancel",
+    "description": "Cancel button"
+  },
+  "openSettings": {
+    "message": "Open settings",
+    "description": "Settings access button"
+  },
+  "linkAnalysisTitle": {
+    "message": "Link Analysis",
+    "description": "Link analysis title"
+  },
+  "linkAnalysisSafe": {
+    "message": "This link appears safe.",
+    "description": "Safe link message"
+  },
+  "linkAnalysisDanger": {
+    "message": "This link looks suspicious! Be careful.",
+    "description": "Dangerous link message"
+  }
+}

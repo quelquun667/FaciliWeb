@@ -1,0 +1,28 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs et outils de dev
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code (mémoire locale, ne pas versionner)
+.claude/
+
+# Ancienne page paramètres (remplacée par l'onglet dans la popup)
+settings/
+
+# Node / Build
+node_modules/
+dist/
+build/
+*.log
+npm-debug.log*
+
+# Archives de distribution
+*.zip
+*.crx
+*.pem
