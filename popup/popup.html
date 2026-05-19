@@ -17,6 +17,21 @@
     <button id="btn-theme-toggle" class="header-icon-btn" aria-label="Basculer le thème sombre">🌙</button>
   </header>
 
+  <!-- Bannière de mise à jour (masquée par défaut) -->
+  <div id="update-banner" class="update-banner" hidden role="alert" aria-live="polite">
+    <div class="update-banner-left">
+      <span class="update-banner-icon">🆕</span>
+      <div class="update-banner-text">
+        <strong>Mise à jour disponible</strong>
+        <span id="update-banner-version"></span>
+      </div>
+    </div>
+    <div class="update-banner-actions">
+      <button id="btn-update-go" class="btn btn-primary btn-small">💾 Sauvegarder &amp; mettre à jour</button>
+      <button id="btn-update-dismiss" class="update-banner-close" aria-label="Masquer jusqu'au prochain démarrage">✕</button>
+    </div>
+  </div>
+
   <!-- Onglets principaux -->
   <nav class="tabs" role="tablist" aria-label="Sections de FaciliWeb">
     <button class="tab-btn active" role="tab" data-tab="home" aria-selected="true">🏠 Accueil</button>
@@ -127,6 +142,10 @@
             <span class="qa-icon">❓</span>
             <span class="qa-label">Aide & fonctionnement</span>
           </button>
+          <button id="btn-export-backup" class="quick-action-btn">
+            <span class="qa-icon">💾</span>
+            <span class="qa-label">Sauvegarder mes données</span>
+          </button>
           <button id="btn-guides" class="quick-action-btn">
             <span class="qa-icon">🖱️</span>
             <span class="qa-label">Mini-guides pratiques</span>
@@ -231,6 +250,13 @@
             <span>🇬🇧 English</span>
           </label>
         </div>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">🔄 Mises à jour</h2>
+        <p class="hint" id="settings-current-version"></p>
+        <button id="btn-check-update" class="btn btn-secondary">🔍 Vérifier maintenant</button>
+        <p id="update-check-result" class="update-check-result" aria-live="polite"></p>
       </section>
 
       <section class="popup-section danger-section">

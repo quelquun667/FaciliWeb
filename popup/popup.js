@@ -10,6 +10,7 @@ let toastTimer = null;
 document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   initThemeToggle();
+  initUpdateBanner();
   loadUrlDecomposition();
   loadWeeklySummary();
   loadSimplifiedHistory();
@@ -20,6 +21,102 @@ document.addEventListener('DOMContentLoaded', () => {
   initAllSettings();
   initResetButton();
 });
+
+// ─── Bannière de mise à jour ──────────────────────────────────────────────
+
+/**
+ * Affiche la bannière de mise à jour si une version plus récente est disponible
+ * et que l'utilisateur ne l'a pas déjà fermée pour cette version.
+ */
+function initUpdateBanner() {
+  const currentVersion = chrome.runtime.getManifest().version;
+
+  // Affiche la version courante dans les paramètres
+  const versionLabel = document.getElementById('settings-current-version');
+  if (versionLabel) versionLabel.textContent = `Version installée : v${currentVersion}`;
+
+  chrome.storage.local.get(
+    { updateAvailable: false, latestVersion: '', releaseUrl: '', updateDismissedVersion: '' },
+    (result) => {
+      // La bannière est masquée si l'utilisateur a déjà fermé pour cette version exacte
+      const alreadyDismissed = result.updateDismissedVersion === result.latestVersion;
+
+      if (result.updateAvailable && result.latestVersion && !alreadyDismissed) {
+        showUpdateBanner(result.latestVersion, result.releaseUrl);
+      }
+    }
+  );
+
+  // Bouton de vérification manuelle dans les paramètres
+  const checkBtn = document.getElementById('btn-check-update');
+  if (checkBtn) {
+    checkBtn.addEventListener('click', () => {
+      const resultEl = document.getElementById('update-check-result');
+      checkBtn.disabled = true;
+      checkBtn.textContent = '⏳ Vérification...';
+      if (resultEl) { resultEl.textContent = ''; resultEl.className = 'update-check-result'; }
+
+      chrome.runtime.sendMessage({ action: 'checkForUpdates' }, () => void chrome.runtime.lastError);
+
+      // Écoute la réponse du background
+      const listener = (msg) => {
+        if (msg.action !== 'updateCheckDone') return;
+        chrome.runtime.onMessage.removeListener(listener);
+        checkBtn.disabled = false;
+        checkBtn.textContent = '🔍 Vérifier maintenant';
+
+        if (!resultEl) return;
+        if (msg.isNewer) {
+          resultEl.textContent = `✅ Nouvelle version disponible : v${msg.latestVersion}`;
+          resultEl.className = 'update-check-result update-available';
+          chrome.storage.local.get({ releaseUrl: '' }, (r) => showUpdateBanner(msg.latestVersion, r.releaseUrl));
+        } else {
+          resultEl.textContent = '✓ Vous avez la dernière version.';
+          resultEl.className = 'update-check-result up-to-date';
+          setTimeout(() => { if (resultEl) resultEl.textContent = ''; }, 3000);
+        }
+      };
+      chrome.runtime.onMessage.addListener(listener);
+      // Timeout si le background ne répond pas (réseau lent / down)
+      setTimeout(() => {
+        chrome.runtime.onMessage.removeListener(listener);
+        checkBtn.disabled = false;
+        checkBtn.textContent = '🔍 Vérifier maintenant';
+        if (resultEl && !resultEl.textContent) {
+          resultEl.textContent = '⚠️ Impossible de vérifier (réseau ?)';
+          resultEl.className = 'update-check-result';
+        }
+      }, 8000);
+    });
+  }
+}
+
+/**
+ * Affiche la bannière de mise à jour avec la version et le lien de release.
+ */
+function showUpdateBanner(latestVersion, releaseUrl) {
+  const banner  = document.getElementById('update-banner');
+  const verSpan = document.getElementById('update-banner-version');
+  const goBtn   = document.getElementById('btn-update-go');
+  const closeBtn = document.getElementById('btn-update-dismiss');
+
+  if (!banner) return;
+  if (verSpan) verSpan.textContent = `v${latestVersion} disponible`;
+  banner.hidden = false;
+
+  goBtn.addEventListener('click', () => {
+    const exportUrl = chrome.runtime.getURL(
+      `export/export.html?release=${encodeURIComponent(releaseUrl)}&version=${encodeURIComponent(latestVersion)}`
+    );
+    chrome.tabs.create({ url: exportUrl });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    // Mémorise la version fermée — la bannière ne réapparaîtra pas pour cette version
+    chrome.storage.local.set({ updateDismissedVersion: latestVersion });
+    banner.hidden = true;
+  });
+}
 
 // ─── Onglets ──────────────────────────────────────────────────────────────
 
@@ -425,7 +522,8 @@ function initQuickActions() {
     'btn-glossary': 'glossary/glossary.html',
     'btn-help': 'help/help.html',
     'btn-shortcuts': 'shortcuts/shortcuts.html',
-    'btn-guides': 'guides/guides.html'
+    'btn-guides': 'guides/guides.html',
+    'btn-export-backup': 'export/export.html'
   };
   Object.entries(map).forEach(([id, path]) => {
     const el = document.getElementById(id);

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sauvegarder avant mise à jour — FaciliWeb</title>
+  <script src="../scripts/theme.js"></script>
+  <link rel="stylesheet" href="export.css" />
+</head>
+<body>
+  <header class="export-header">
+    <span class="export-logo" aria-hidden="true">💾</span>
+    <div>
+      <h1>Sauvegarder avant de mettre à jour</h1>
+      <p class="export-subtitle" id="export-subtitle">Exportez vos données avant d'installer la nouvelle version.</p>
+    </div>
+  </header>
+
+  <main class="export-container">
+
+    <!-- Avertissement -->
+    <div class="export-warning" role="alert">
+      <span class="warning-icon" aria-hidden="true">⚠️</span>
+      <div>
+        <strong>Pourquoi exporter avant de mettre à jour ?</strong>
+        <p>La mise à jour remplace les fichiers de l'extension. Vos identifiants et paramètres sont stockés dans le navigateur et ne sont pas supprimés, mais une sauvegarde reste recommandée en cas d'imprévu.</p>
+      </div>
+    </div>
+
+    <!-- Étape 1 : Export des paramètres -->
+    <section class="export-section" aria-labelledby="settings-export-title">
+      <div class="step-badge">1</div>
+      <div class="export-section-content">
+        <h2 id="settings-export-title">⚙️ Exporter les paramètres</h2>
+        <p>Sauvegarde toutes vos préférences (toggles, langue, thème, durée de pause…).</p>
+        <button id="btn-export-settings" class="btn btn-primary">📤 Télécharger les paramètres</button>
+        <p id="settings-export-status" class="export-status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- Étape 2 : Export des identifiants -->
+    <section class="export-section" aria-labelledby="creds-export-title">
+      <div class="step-badge">2</div>
+      <div class="export-section-content">
+        <h2 id="creds-export-title">🔑 Exporter les identifiants</h2>
+        <p>Déchiffre et télécharge vos identifiants en JSON. Gardez ce fichier en lieu sûr.</p>
+
+        <div id="master-pwd-row" class="master-pwd-row">
+          <label class="form-label" for="export-master-pwd">Mot de passe maître :</label>
+          <div class="input-group">
+            <input type="password" id="export-master-pwd" class="form-input"
+              placeholder="••••••••" autocomplete="off"
+              aria-describedby="creds-export-hint" />
+            <button type="button" id="btn-toggle-export-pwd" class="btn-icon" aria-label="Afficher">👁️</button>
+          </div>
+          <p id="creds-export-hint" class="form-help">Requis pour déchiffrer vos identifiants avant export.</p>
+        </div>
+
+        <button id="btn-export-creds" class="btn btn-primary">📤 Télécharger les identifiants</button>
+        <p id="creds-export-status" class="export-status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- Étape 3 : Aller à la release -->
+    <section class="export-section export-section-go" aria-labelledby="update-go-title">
+      <div class="step-badge">3</div>
+      <div class="export-section-content">
+        <h2 id="update-go-title">🚀 Installer la mise à jour</h2>
+        <p>Téléchargez le fichier ZIP de la nouvelle version depuis GitHub et installez-le en remplaçant l'ancien dossier.</p>
+        <a id="btn-go-release" class="btn btn-release" href="#" target="_blank" rel="noopener noreferrer">
+          ⬇️ Télécharger la nouvelle version
+        </a>
+        <p class="update-install-steps">
+          Après téléchargement : décompressez le ZIP → allez sur <code>chrome://extensions/</code>
+          → cliquez <em>Recharger</em> sur FaciliWeb (ou rechargez le dossier).
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../scripts/crypto.js"></script>
+  <script src="export.js"></script>
+</body>
+</html>
