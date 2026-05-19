@@ -16,7 +16,7 @@ jobs:
 
       - name: Valider le JSON du manifest
         run: |
-          python3 -c "import json, sys; json.load(open('manifest.json')); print('manifest.json valide')"
+          python3 -c "import json; json.load(open('manifest.json')); print('manifest.json valide')"
 
       - name: Valider les fichiers de traduction
         run: |
@@ -40,4 +40,18 @@ jobs:
 
       - name: Linter les scripts
         run: |
-          npx eslint scripts/helpers.js scripts/content.js scripts/background.js popup/popup.js settings/settings.js --env browser,es2020 --parser-options=ecmaVersion:2020 --rule '{"no-eval": "error", "no-undef": "warn"}'
+          npx eslint \
+            scripts/helpers.js \
+            scripts/content.js \
+            scripts/background.js \
+            scripts/crypto.js \
+            scripts/generator.js \
+            scripts/theme.js \
+            popup/popup.js \
+            passwords/passwords.js \
+            annuaire/annuaire.js \
+            guides/guides.js \
+            onboarding/onboarding.js \
+            --env browser,es2020 \
+            --parser-options=ecmaVersion:2020 \
+            --rule '{"no-eval": "error", "no-undef": "warn"}'
