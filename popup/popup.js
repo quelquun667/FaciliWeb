@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initNotes();
   initBreakTimer();
   initBreachCheck();
+  initEmailChecker();
+  initUnitConverter();
   initQuickActions();
   initAllSettings();
   initResetButton();
@@ -104,18 +106,20 @@ function showUpdateBanner(latestVersion, releaseUrl) {
   if (verSpan) verSpan.textContent = `v${latestVersion} disponible`;
   banner.hidden = false;
 
-  goBtn.addEventListener('click', () => {
+  // Utilise `onclick` (qui remplace) plutôt qu'addEventListener (qui empile),
+  // car showUpdateBanner peut être appelée plusieurs fois (init + check manuel).
+  goBtn.onclick = () => {
     const exportUrl = chrome.runtime.getURL(
       `export/export.html?release=${encodeURIComponent(releaseUrl)}&version=${encodeURIComponent(latestVersion)}`
     );
     chrome.tabs.create({ url: exportUrl });
-  });
+  };
 
-  closeBtn.addEventListener('click', () => {
+  closeBtn.onclick = () => {
     // Mémorise la version fermée — la bannière ne réapparaîtra pas pour cette version
     chrome.storage.local.set({ updateDismissedVersion: latestVersion });
     banner.hidden = true;
-  });
+  };
 }
 
 // ─── Onglets ──────────────────────────────────────────────────────────────
@@ -513,6 +517,205 @@ function initBreachCheck() {
   });
 }
 
+// ─── Vérificateur d'email ─────────────────────────────────────────────────
+
+// Domaines email connus comme légitimes
+const KNOWN_EMAIL_DOMAINS = new Set([
+  // Fournisseurs grand public
+  'gmail.com', 'googlemail.com', 'outlook.com', 'outlook.fr', 'hotmail.com',
+  'hotmail.fr', 'live.com', 'live.fr', 'yahoo.com', 'yahoo.fr',
+  'icloud.com', 'me.com', 'mac.com', 'aol.com',
+  // FAI français
+  'orange.fr', 'wanadoo.fr', 'free.fr', 'sfr.fr', 'neuf.fr', 'laposte.net',
+  'bbox.fr', 'numericable.fr', 'club-internet.fr',
+  // Pro / vie privée
+  'proton.me', 'protonmail.com', 'tutanota.com', 'gmx.com', 'gmx.fr',
+  'yandex.com', 'mail.com', 'zoho.com',
+  // Services publics et grandes entreprises (échantillon courant)
+  'impots.gouv.fr', 'ameli.fr', 'caf.fr', 'pole-emploi.fr', 'francetravail.fr',
+  'bnpparibas.fr', 'credit-agricole.fr', 'societegenerale.fr', 'lcl.fr',
+  'creditmutuel.fr', 'caisse-epargne.fr', 'labanquepostale.fr',
+  'amazon.fr', 'amazon.com', 'paypal.com', 'paypal.fr',
+  'netflix.com', 'apple.com', 'microsoft.com'
+]);
+
+function initEmailChecker() {
+  const btn   = document.getElementById('btn-check-email');
+  const input = document.getElementById('email-checker-input');
+  const out   = document.getElementById('email-checker-result');
+  if (!btn || !input || !out) return;
+
+  btn.addEventListener('click', () => analyzeEmail(input.value.trim(), out));
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') analyzeEmail(input.value.trim(), out); });
+}
+
+/**
+ * Analyse une adresse email et affiche un verdict pédagogique.
+ * Vérifie : format, domaine connu, motif suspect dans la partie locale.
+ */
+function analyzeEmail(email, out) {
+  out.innerHTML = '';
+
+  if (!email) {
+    appendVerdict(out, '⚠️ Entrez une adresse email.', 'warn');
+    return;
+  }
+
+  // Format basique
+  const match = email.match(/^([^\s@]+)@([^\s@]+\.[^\s@]+)$/);
+  if (!match) {
+    appendVerdict(out, '❌ Format invalide — il manque un @ ou un point.', 'bad');
+    return;
+  }
+
+  const local  = match[1].toLowerCase();
+  const domain = match[2].toLowerCase();
+
+  // 1. Domaine connu ?
+  const domainKnown = KNOWN_EMAIL_DOMAINS.has(domain);
+  appendVerdict(out,
+    domainKnown
+      ? `✅ Domaine reconnu : <code>${escapeHtml(domain)}</code>`
+      : `❓ Domaine inconnu : <code>${escapeHtml(domain)}</code> — vérifiez à qui il appartient`,
+    domainKnown ? 'ok' : 'warn'
+  );
+
+  // 2. Analyse de la partie locale
+  const suspicions = detectSuspiciousLocalPart(local);
+  if (suspicions.length === 0) {
+    appendVerdict(out, `✅ Le nom « <code>${escapeHtml(local)}</code> » semble normal.`, 'ok');
+  } else {
+    appendVerdict(out,
+      `⚠️ Le nom « <code>${escapeHtml(local)}</code> » a des caractéristiques suspectes :`,
+      'warn'
+    );
+    const ul = document.createElement('ul');
+    ul.className = 'email-suspicions';
+    suspicions.forEach((s) => {
+      const li = document.createElement('li');
+      li.textContent = s;
+      ul.appendChild(li);
+    });
+    out.appendChild(ul);
+  }
+
+  // 3. Verdict global
+  const isLikelyFake = !domainKnown && suspicions.length >= 2;
+  const isClean = domainKnown && suspicions.length === 0;
+  if (isLikelyFake) {
+    appendVerdict(out, '🚨 <strong>Cette adresse a de forts signes d\'arnaque.</strong> Ne répondez pas, ne cliquez sur aucun lien.', 'bad');
+  } else if (isClean) {
+    appendVerdict(out, '🛡️ <strong>Cette adresse a l\'air légitime.</strong> Restez vigilant si le contenu vous semble étrange.', 'ok');
+  } else {
+    appendVerdict(out, '🤔 <strong>Adresse à examiner manuellement.</strong> Si vous avez un doute, ne répondez pas.', 'warn');
+  }
+}
+
+/**
+ * Détecte les motifs suspects dans la partie locale (avant le @) d'un email.
+ * @param {string} local
+ * @returns {string[]} Liste des problèmes détectés (vide si rien de suspect).
+ */
+function detectSuspiciousLocalPart(local) {
+  const problems = [];
+
+  if (local.length > 25) {
+    problems.push('Trop long (plus de 25 caractères).');
+  }
+
+  if (/^\d/.test(local) && /\d$/.test(local)) {
+    problems.push('Commence ET finit par des chiffres.');
+  }
+
+  // Trop de chiffres
+  const digits = local.match(/\d/g) || [];
+  if (digits.length >= 6) {
+    problems.push(`Contient beaucoup de chiffres (${digits.length}).`);
+  }
+
+  // Pas de voyelle dans la partie alphabétique (chaîne aléatoire)
+  const letters = local.replace(/[^a-z]/g, '');
+  if (letters.length >= 5 && !/[aeiouy]/.test(letters)) {
+    problems.push('Aucune voyelle — ressemble à une chaîne aléatoire.');
+  }
+
+  // Trop de consonnes consécutives
+  if (/[bcdfghjklmnpqrstvwxz]{5,}/.test(local)) {
+    problems.push('Plus de 5 consonnes consécutives — ressemble à du bruit.');
+  }
+
+  // Combinaison underscore + suite de chiffres
+  if (/_\d{4,}$/.test(local)) {
+    problems.push('Se termine par un underscore et des chiffres (style automatique).');
+  }
+
+  // Plus de 50% de chiffres
+  if (local.length >= 4 && digits.length / local.length > 0.5) {
+    problems.push('Plus de moitié de chiffres.');
+  }
+
+  return problems;
+}
+
+function appendVerdict(container, htmlMsg, level) {
+  const div = document.createElement('div');
+  div.className = `email-verdict email-verdict-${level}`;
+  div.innerHTML = htmlMsg;
+  container.appendChild(div);
+}
+
+function escapeHtml(text) {
+  return text.replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[c]);
+}
+
+// ─── Convertisseur d'unités ───────────────────────────────────────────────
+
+const FRANC_RATE = 6.55957; // 1 EUR = 6,55957 F (taux légal de conversion)
+
+function initUnitConverter() {
+  bindConverter('conv-francs',     'conv-euros',      (f) => f / FRANC_RATE, (e) => e * FRANC_RATE);
+  bindConverter('conv-celsius',    'conv-fahrenheit', (c) => c * 9 / 5 + 32, (f) => (f - 32) * 5 / 9);
+  bindConverter('conv-km',         'conv-miles',      (k) => k * 0.621371,   (m) => m / 0.621371);
+  bindConverter('conv-kg',         'conv-lb',         (k) => k * 2.20462,    (l) => l / 2.20462);
+}
+
+/**
+ * Lie deux champs numériques de manière bidirectionnelle.
+ * Saisir dans A met à jour B, et inversement, sans boucle infinie.
+ */
+function bindConverter(idA, idB, aToB, bToA) {
+  const a = document.getElementById(idA);
+  const b = document.getElementById(idB);
+  if (!a || !b) return;
+
+  let updating = false;
+
+  a.addEventListener('input', () => {
+    if (updating) return;
+    updating = true;
+    const val = parseFloat(a.value);
+    b.value = isNaN(val) ? '' : round(aToB(val));
+    updating = false;
+  });
+
+  b.addEventListener('input', () => {
+    if (updating) return;
+    updating = true;
+    const val = parseFloat(b.value);
+    a.value = isNaN(val) ? '' : round(bToA(val));
+    updating = false;
+  });
+}
+
+/**
+ * Arrondit avec 4 décimales et supprime les zéros inutiles.
+ */
+function round(n) {
+  return Number(n.toFixed(4)).toString();
+}
+
 // ─── Boutons d'actions rapides ────────────────────────────────────────────
 
 function initQuickActions() {
@@ -552,12 +755,13 @@ function initQuickActions() {
 const SETTING_KEYS = [
   'capsLockEnabled', 'highlightEnabled', 'specialCharsEnabled', 'jargonEnabled',
   'phishingEnabled', 'typoDetectorEnabled', 'attachmentCheckerEnabled',
-  'captchaDetectorEnabled', 'autofillEnabled', 'weeklySummaryEnabled', 'darkMode'
+  'captchaDetectorEnabled', 'autofillEnabled', 'weeklySummaryEnabled', 'darkMode',
+  'passwordProtectionEnabled'
 ];
 
 function initAllSettings() {
-  // Toggles désactivés par défaut (peuvent générer des conflits visuels)
-  const offByDefault = new Set(['darkMode', 'highlightEnabled']);
+  // Toggles désactivés par défaut (sécurité opt-in ou conflits visuels)
+  const offByDefault = new Set(['darkMode', 'highlightEnabled', 'passwordProtectionEnabled']);
   const defaults = SETTING_KEYS.reduce((acc, key) => {
     acc[key] = !offByDefault.has(key);
     return acc;
@@ -612,10 +816,20 @@ function initAllSettings() {
 function onToggleClick(toggle) {
   const newState = toggle.getAttribute('aria-checked') !== 'true';
   const key = toggle.dataset.setting;
+
+  // Protection du coffre : ouvre une page dédiée pour la migration
+  // (création/saisie du mot de passe maître, déchiffrement, etc.)
+  if (key === 'passwordProtectionEnabled') {
+    const action = newState ? 'enable' : 'disable';
+    chrome.tabs.create({
+      url: chrome.runtime.getURL(`passwords/passwords.html?protect=${action}`)
+    });
+    return; // ne pas appliquer immédiatement — la page de gestion s'en charge
+  }
+
   toggle.setAttribute('aria-checked', String(newState));
 
   const update = { [key]: newState };
-  // Synchronise darkMode avec la clé theme partagée
   if (key === 'darkMode') {
     update.theme = newState ? 'dark' : 'light';
     applyTheme(newState);

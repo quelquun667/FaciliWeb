@@ -2,16 +2,227 @@
 
 'use strict';
 
-const VAULT_KEY = 'faciliweb_vault';
+const VAULT_KEY  = 'faciliweb_vault';        // Coffre chiffré (mode protégé)
+const PLAIN_KEY  = 'faciliweb_passwords';    // Liste en clair (mode non protégé)
+const SETTING_KEY = 'passwordProtectionEnabled';
 
 // Clé AES en mémoire pour la session (effacée si la page se recharge)
 let sessionKey = null;
 let sessionEntries = [];
+let isProtected = false;  // True si l'utilisateur utilise un mot de passe maître
 let toastTimer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-  checkVaultStatus();
+  // Gère les demandes de migration depuis les paramètres (?protect=enable|disable)
+  const params = new URLSearchParams(window.location.search);
+  const protectAction = params.get('protect');
+
+  if (protectAction === 'enable')  { startProtectionEnable();  return; }
+  if (protectAction === 'disable') { startProtectionDisable(); return; }
+
+  // Démarrage normal — choisit l'interface selon la préférence utilisateur
+  chrome.storage.local.get({ [SETTING_KEY]: false }, (s) => {
+    isProtected = s[SETTING_KEY];
+    if (isProtected) checkVaultStatus();
+    else             enterUnprotectedMode();
+  });
 });
+
+// ─── Mode non protégé (sans mot de passe maître) ──────────────────────────
+
+/**
+ * Charge directement les identifiants stockés en clair, sans demander de
+ * mot de passe. Affiche un bandeau d'invitation à activer la protection.
+ */
+function enterUnprotectedMode() {
+  chrome.storage.local.get({ [PLAIN_KEY]: [] }, (r) => {
+    sessionEntries = r[PLAIN_KEY];
+    document.getElementById('master-overlay').hidden = true;
+    document.getElementById('vault-content').hidden  = false;
+
+    // Bandeau informatif : la protection est désactivée
+    showProtectionBanner();
+
+    prefillCurrentSite();
+    initForm();
+    initSearch();
+    initHeaderActions();
+    renderList();
+  });
+}
+
+/**
+ * Ajoute un bandeau jaune en haut de la page rappelant que les identifiants
+ * ne sont pas protégés par mot de passe. Cliquable pour activer la protection.
+ */
+function showProtectionBanner() {
+  if (document.getElementById('fw-protection-banner')) return;
+
+  const banner = document.createElement('div');
+  banner.id = 'fw-protection-banner';
+  banner.className = 'protection-banner';
+  banner.innerHTML = `
+    <span class="protection-icon">⚠️</span>
+    <span class="protection-text">
+      Vos identifiants ne sont pas protégés par un mot de passe.
+    </span>
+    <button id="btn-enable-protection" class="btn btn-primary btn-small">🔐 Activer la protection</button>
+  `;
+
+  const main = document.querySelector('main.passwords-container');
+  if (main) main.prepend(banner);
+
+  document.getElementById('btn-enable-protection').addEventListener('click', () => {
+    window.location.search = '?protect=enable';
+  });
+}
+
+// ─── Activation de la protection (chiffrement des données existantes) ────
+
+/**
+ * Affiche un overlay demandant à l'utilisateur de créer un mot de passe
+ * maître, puis chiffre tous ses identifiants existants dans le coffre.
+ */
+function startProtectionEnable() {
+  const overlay = document.getElementById('master-overlay');
+  const desc    = document.getElementById('master-desc');
+  const confirm = document.getElementById('master-confirm-row');
+  const submit  = document.getElementById('master-submit');
+  const strengthBar = document.getElementById('master-strength-bar');
+  const title   = document.getElementById('master-title');
+
+  overlay.hidden = false;
+  title.textContent = '🔐 Activer la protection';
+  desc.textContent = 'Choisissez un mot de passe maître. ⚠️ Notez-le : sans lui, vos identifiants seront irrécupérables.';
+  confirm.hidden = false;
+  submit.textContent = '🔐 Activer la protection';
+  strengthBar.hidden = false;
+
+  document.getElementById('master-input').addEventListener('input', (e) => {
+    const r = FW_GENERATOR.evaluate(e.target.value);
+    updateStrengthUI('master-strength-fill', 'master-strength-label', r);
+  });
+
+  document.getElementById('master-toggle-eye').addEventListener('click', () => {
+    const inp = document.getElementById('master-input');
+    const isHidden = inp.type === 'password';
+    inp.type = isHidden ? 'text' : 'password';
+    document.getElementById('master-toggle-eye').textContent = isHidden ? '🙈' : '👁️';
+  });
+
+  const onSubmit = async () => {
+    const pwd    = document.getElementById('master-input').value;
+    const cpwd   = document.getElementById('master-confirm').value;
+    const errEl  = document.getElementById('master-error');
+
+    if (pwd.length < 8) { errEl.textContent = '⚠️ Mot de passe maître : minimum 8 caractères.'; return; }
+    if (pwd !== cpwd)   { errEl.textContent = '⚠️ Les deux mots de passe ne correspondent pas.'; return; }
+
+    errEl.textContent = '';
+    submit.disabled = true;
+    submit.textContent = '⏳ Chiffrement...';
+
+    // Récupère les identifiants en clair existants
+    const stored  = await chrome.storage.local.get({ [PLAIN_KEY]: [] });
+    const entries = stored[PLAIN_KEY];
+
+    // Crée le coffre, le déverrouille pour ranger les entrées
+    const vault   = await FW_CRYPTO.createVault(pwd);
+    const opened  = await FW_CRYPTO.unlockVault(vault, pwd);
+    const updated = await FW_CRYPTO.saveEntries(vault, entries, opened.key);
+
+    await chrome.storage.local.set({
+      [VAULT_KEY]: updated,
+      [SETTING_KEY]: true
+    });
+    // Supprime les données en clair une fois chiffrées
+    await chrome.storage.local.remove(PLAIN_KEY);
+
+    // Redirige vers la page sans paramètre — déverrouillage normal ensuite
+    window.location.href = chrome.runtime.getURL('passwords/passwords.html');
+  };
+
+  submit.addEventListener('click', onSubmit);
+  document.getElementById('master-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') onSubmit();
+  });
+  document.getElementById('master-input').focus();
+}
+
+// ─── Désactivation de la protection (déchiffrement vers clair) ────────────
+
+/**
+ * Demande le mot de passe maître pour confirmer la désactivation, puis
+ * stocke les identifiants en clair et supprime le coffre chiffré.
+ */
+function startProtectionDisable() {
+  const overlay = document.getElementById('master-overlay');
+  const desc    = document.getElementById('master-desc');
+  const confirm = document.getElementById('master-confirm-row');
+  const submit  = document.getElementById('master-submit');
+  const title   = document.getElementById('master-title');
+
+  chrome.storage.local.get({ [VAULT_KEY]: null }, (result) => {
+    if (!result[VAULT_KEY]) {
+      // Pas de coffre existant : on désactive juste le réglage
+      chrome.storage.local.set({ [SETTING_KEY]: false }, () => {
+        window.location.href = chrome.runtime.getURL('passwords/passwords.html');
+      });
+      return;
+    }
+
+    const vault = result[VAULT_KEY];
+
+    overlay.hidden = false;
+    title.textContent = '🔓 Désactiver la protection';
+    desc.textContent = 'Entrez votre mot de passe maître pour confirmer. Vos identifiants seront stockés sans chiffrement.';
+    confirm.hidden = true;
+    submit.textContent = '🔓 Désactiver la protection';
+
+    document.getElementById('master-toggle-eye').addEventListener('click', () => {
+      const inp = document.getElementById('master-input');
+      const isHidden = inp.type === 'password';
+      inp.type = isHidden ? 'text' : 'password';
+      document.getElementById('master-toggle-eye').textContent = isHidden ? '🙈' : '👁️';
+    });
+
+    const onSubmit = async () => {
+      const pwd   = document.getElementById('master-input').value;
+      const errEl = document.getElementById('master-error');
+
+      submit.disabled = true;
+      submit.textContent = '⏳ Déchiffrement...';
+      errEl.textContent = '⏳ Calcul de la clé en cours, cela peut prendre quelques secondes...';
+      errEl.style.color = '#888';
+
+      const r = await FW_CRYPTO.unlockVault(vault, pwd);
+      if (!r) {
+        errEl.textContent = '❌ Mot de passe maître incorrect.';
+        errEl.style.color = '';
+        submit.disabled = false;
+        submit.textContent = '🔓 Désactiver la protection';
+        document.getElementById('master-input').value = '';
+        document.getElementById('master-input').focus();
+        return;
+      }
+
+      // Stocke en clair, supprime le coffre, désactive le réglage
+      await chrome.storage.local.set({
+        [PLAIN_KEY]: r.entries,
+        [SETTING_KEY]: false
+      });
+      await chrome.storage.local.remove(VAULT_KEY);
+
+      window.location.href = chrome.runtime.getURL('passwords/passwords.html');
+    };
+
+    submit.addEventListener('click', onSubmit);
+    document.getElementById('master-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') onSubmit();
+    });
+    document.getElementById('master-input').focus();
+  });
+}
 
 // ─── Coffre-fort : déverrouillage ─────────────────────────────────────────
 
@@ -93,11 +304,14 @@ async function unlockVault(vault) {
 
   document.getElementById('master-submit').disabled = true;
   document.getElementById('master-submit').textContent = '⏳ Déverrouillage...';
+  errEl.textContent = '⏳ Calcul de la clé en cours, cela peut prendre quelques secondes...';
+  errEl.style.color = '#888';
 
   const result = await FW_CRYPTO.unlockVault(vault, pwd);
 
   if (!result) {
     errEl.textContent = '❌ Mot de passe maître incorrect.';
+    errEl.style.color = '';
     document.getElementById('master-submit').disabled = false;
     document.getElementById('master-submit').textContent = '🔓 Déverrouiller';
     document.getElementById('master-input').value = '';
@@ -105,8 +319,11 @@ async function unlockVault(vault) {
     return;
   }
 
+  errEl.textContent = '';
+  errEl.style.color = '';
   sessionKey     = result.key;
   sessionEntries = result.entries;
+  isProtected    = true;
 
   document.getElementById('master-overlay').hidden = true;
   document.getElementById('vault-content').hidden   = false;
@@ -371,18 +588,30 @@ function initSearch() {
   document.getElementById('search-input').addEventListener('input', renderList);
 }
 
-// ─── Persistance chiffrée ─────────────────────────────────────────────────
+// ─── Persistance (mode chiffré ou clair selon la préférence) ──────────────
 
 async function persistVault() {
-  const vault = await chrome.storage.local.get({ [VAULT_KEY]: null });
-  const updated = await FW_CRYPTO.saveEntries(vault[VAULT_KEY], sessionEntries, sessionKey);
-  await chrome.storage.local.set({ [VAULT_KEY]: updated });
+  if (isProtected) {
+    // Mode chiffré : rechiffre le tableau et écrit dans le coffre
+    const vault = await chrome.storage.local.get({ [VAULT_KEY]: null });
+    const updated = await FW_CRYPTO.saveEntries(vault[VAULT_KEY], sessionEntries, sessionKey);
+    await chrome.storage.local.set({ [VAULT_KEY]: updated });
+  } else {
+    // Mode clair : écrit directement le tableau
+    await chrome.storage.local.set({ [PLAIN_KEY]: sessionEntries });
+  }
 }
 
 // ─── Import / Export ──────────────────────────────────────────────────────
 
 function initHeaderActions() {
-  document.getElementById('btn-lock').addEventListener('click', lockVault);
+  const lockBtn = document.getElementById('btn-lock');
+  // Bouton verrouiller : visible uniquement en mode protégé
+  if (isProtected) {
+    lockBtn.addEventListener('click', lockVault);
+  } else {
+    lockBtn.hidden = true;
+  }
   document.getElementById('btn-export').addEventListener('click', exportData);
   document.getElementById('import-file').addEventListener('change', importData);
 }
