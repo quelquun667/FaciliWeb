@@ -5,6 +5,10 @@ Toutes les modifications notables de ce projet sont documentées dans ce fichier
 Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/) et le versionnement suit [Semantic Versioning](https://semver.org/lang/fr/).
 
 
+## [v1.2.0] — 2026-05-21
+
+
+
 ## [v1.1.0] — 2026-05-19
 
 _Premier release — voir [README](README.md) pour la liste complète._
