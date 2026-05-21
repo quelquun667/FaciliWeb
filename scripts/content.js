@@ -568,6 +568,59 @@ function initJargonTranslator() {
  * Remplace les occurrences de termes du dictionnaire par des éléments avec infobulle.
  * @param {Text} textNode - Le nœud texte à traiter.
  */
+// Tooltip partagée pour les termes du jargon, attachée directement au <body>.
+// Cela évite que la tooltip soit piégée dans le contexte d'empilement (z-index)
+// d'un élément parent (ex. les cartes de résultats Google).
+let sharedJargonTooltip = null;
+
+function getSharedJargonTooltip() {
+  if (sharedJargonTooltip && document.body.contains(sharedJargonTooltip)) return sharedJargonTooltip;
+  sharedJargonTooltip = createElement('div', {
+    id: 'faciliweb-jargon-tooltip-shared',
+    role: 'tooltip',
+    'aria-hidden': 'true'
+  });
+  document.body.appendChild(sharedJargonTooltip);
+  return sharedJargonTooltip;
+}
+
+/**
+ * Affiche la tooltip partagée au-dessus du terme survolé/focalisé.
+ * Recalcule la position via getBoundingClientRect — fonctionne quel que soit
+ * le contexte d'empilement du terme parent.
+ */
+function showJargonTooltip(termEl) {
+  const tooltip = getSharedJargonTooltip();
+  tooltip.textContent = termEl.dataset.faciliwebDef || '';
+  tooltip.classList.add('faciliweb-jargon-tooltip-visible');
+  tooltip.setAttribute('aria-hidden', 'false');
+
+  // Positionne au-dessus du terme, centré, recadré dans la fenêtre
+  const rect = termEl.getBoundingClientRect();
+  const tooltipWidth = 240;
+
+  let left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+  left = Math.max(8, Math.min(left, window.innerWidth - tooltipWidth - 8));
+
+  // Force le navigateur à mesurer la hauteur réelle avant le positionnement vertical
+  tooltip.style.left = `${left + window.scrollX}px`;
+  tooltip.style.top  = '0px';
+  const tooltipHeight = tooltip.offsetHeight;
+
+  // Place au-dessus du terme si possible, sinon en dessous
+  const aboveTop = rect.top + window.scrollY - tooltipHeight - 8;
+  const belowTop = rect.bottom + window.scrollY + 8;
+  const placeAbove = rect.top >= tooltipHeight + 12;
+
+  tooltip.style.top = `${placeAbove ? aboveTop : belowTop}px`;
+}
+
+function hideJargonTooltip() {
+  if (!sharedJargonTooltip) return;
+  sharedJargonTooltip.classList.remove('faciliweb-jargon-tooltip-visible');
+  sharedJargonTooltip.setAttribute('aria-hidden', 'true');
+}
+
 function wrapJargonTerms(textNode) {
   const originalText = textNode.textContent;
   const parent = textNode.parentElement;
@@ -585,31 +638,29 @@ function wrapJargonTerms(textNode) {
   let match;
 
   while ((match = pattern.exec(originalText)) !== null) {
-    // Ajoute le texte avant le terme
     if (match.index > lastIndex) {
       fragment.appendChild(document.createTextNode(originalText.slice(lastIndex, match.index)));
     }
 
-    // Crée l'élément avec l'infobulle
+    const definition = JARGON_DICTIONARY[match[0].toLowerCase()];
     const termEl = createElement('span', {
       className: 'faciliweb-jargon-term',
       'data-faciliweb-jargon': 'true',
-      role: 'tooltip',
+      'data-faciliweb-def': definition,
       tabindex: '0',
-      'aria-label': `Définition de ${match[0]} : ${JARGON_DICTIONARY[match[0].toLowerCase()]}`
+      'aria-label': `Définition de ${match[0]} : ${definition}`
     }, match[0]);
 
-    const tooltip = createElement('span', {
-      className: 'faciliweb-jargon-tooltip',
-      role: 'definition'
-    }, JARGON_DICTIONARY[match[0].toLowerCase()]);
+    // Pas de tooltip-enfant ! On utilise la tooltip partagée affichée au survol.
+    termEl.addEventListener('mouseenter', () => showJargonTooltip(termEl));
+    termEl.addEventListener('focus',      () => showJargonTooltip(termEl));
+    termEl.addEventListener('mouseleave', hideJargonTooltip);
+    termEl.addEventListener('blur',       hideJargonTooltip);
 
-    termEl.appendChild(tooltip);
     fragment.appendChild(termEl);
     lastIndex = pattern.lastIndex;
   }
 
-  // Ajoute le texte restant après le dernier terme
   if (lastIndex < originalText.length) {
     fragment.appendChild(document.createTextNode(originalText.slice(lastIndex)));
   }

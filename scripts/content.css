@@ -205,38 +205,32 @@
   display: inline;
 }
 
-.faciliweb-jargon-tooltip {
-  display: none;
+/* Tooltip partagée attachée au <body> — échappe à tout stacking context parent.
+   z-index au maximum d'un int 32 bits signé pour passer au-dessus des éléments
+   les plus agressifs (overlays Google, modales, etc.). */
+#faciliweb-jargon-tooltip-shared {
   position: absolute;
-  bottom: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: 0;
   background-color: #1a2a4a;
-  color: var(--fw-white);
+  color: #ffffff;
   font-size: 13px;
   font-family: var(--fw-font);
   padding: 8px 12px;
   border-radius: 8px;
-  width: 220px;
-  z-index: var(--fw-z-base);
-  box-shadow: var(--fw-shadow);
+  width: 240px;
+  z-index: 2147483647;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   pointer-events: none;
   line-height: 1.4;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s;
 }
 
-.faciliweb-jargon-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: #1a2a4a;
-}
-
-.faciliweb-jargon-term:hover .faciliweb-jargon-tooltip,
-.faciliweb-jargon-term:focus .faciliweb-jargon-tooltip {
-  display: block;
+#faciliweb-jargon-tooltip-shared.faciliweb-jargon-tooltip-visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* ─── Overlay Zone de Danger ─────────────────────────────────────────────── */

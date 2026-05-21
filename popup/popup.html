@@ -124,6 +124,59 @@
       </section>
 
       <section class="popup-section">
+        <h2 class="section-title">📧 Vérificateur d'email</h2>
+        <p class="hint">Vérifie si une adresse email semble légitime (domaine connu, nom non aléatoire).</p>
+        <div class="grid-2col">
+          <label class="form-label" for="email-checker-input">Adresse email :</label>
+          <input type="email" id="email-checker-input" class="form-input"
+                 placeholder="exemple@email.com" autocomplete="off" />
+        </div>
+        <button id="btn-check-email" class="btn btn-primary">🔎 Analyser</button>
+        <div id="email-checker-result" class="email-checker-result" aria-live="polite"></div>
+      </section>
+
+      <section class="popup-section">
+        <h2 class="section-title">🔄 Convertisseur d'unités</h2>
+
+        <details class="converter-group">
+          <summary>💶 Anciens francs ↔ Euros</summary>
+          <div class="converter-row">
+            <input type="number" id="conv-francs"  class="form-input" placeholder="Francs" step="any" />
+            <span class="conv-arrow">↔</span>
+            <input type="number" id="conv-euros"   class="form-input" placeholder="Euros" step="any" />
+          </div>
+          <p class="conv-hint">Taux fixe : 1 € = 6,55957 F (loi de l'an 2000)</p>
+        </details>
+
+        <details class="converter-group">
+          <summary>🌡️ Température (°C ↔ °F)</summary>
+          <div class="converter-row">
+            <input type="number" id="conv-celsius"    class="form-input" placeholder="°C" step="any" />
+            <span class="conv-arrow">↔</span>
+            <input type="number" id="conv-fahrenheit" class="form-input" placeholder="°F" step="any" />
+          </div>
+        </details>
+
+        <details class="converter-group">
+          <summary>📏 Distance (km ↔ miles)</summary>
+          <div class="converter-row">
+            <input type="number" id="conv-km"    class="form-input" placeholder="km" step="any" />
+            <span class="conv-arrow">↔</span>
+            <input type="number" id="conv-miles" class="form-input" placeholder="miles" step="any" />
+          </div>
+        </details>
+
+        <details class="converter-group">
+          <summary>⚖️ Poids (kg ↔ livres)</summary>
+          <div class="converter-row">
+            <input type="number" id="conv-kg" class="form-input" placeholder="kg" step="any" />
+            <span class="conv-arrow">↔</span>
+            <input type="number" id="conv-lb" class="form-input" placeholder="livres" step="any" />
+          </div>
+        </details>
+      </section>
+
+      <section class="popup-section">
         <h2 class="section-title">📚 Documentation et accès rapide</h2>
         <div class="quick-actions">
           <button id="btn-passwords" class="quick-action-btn">
@@ -221,6 +274,11 @@
         <div class="setting-row">
           <label for="setting-autofill" class="setting-label">🔑 Proposer remplissage et sauvegarde des identifiants</label>
           <button class="toggle-switch" role="switch" id="setting-autofill" aria-checked="true" data-setting="autofillEnabled"><span class="toggle-thumb"></span></button>
+        </div>
+
+        <div class="setting-row">
+          <label for="setting-vault-protect" class="setting-label">🔐 Demander un mot de passe maître pour afficher mes identifiants</label>
+          <button class="toggle-switch" role="switch" id="setting-vault-protect" aria-checked="false" data-setting="passwordProtectionEnabled"><span class="toggle-thumb"></span></button>
         </div>
       </section>
 

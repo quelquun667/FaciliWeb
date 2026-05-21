@@ -78,6 +78,12 @@ body {
   flex-wrap: wrap;
 }
 
+/* L'attribut HTML `hidden` doit primer sur display:flex de .update-banner.
+   Sans cette règle, la bannière reste visible même avec hidden=true. */
+.update-banner[hidden] {
+  display: none;
+}
+
 .update-banner-left {
   display: flex;
   align-items: center;
@@ -609,6 +615,111 @@ body {
 }
 
 .status-badge.active { background-color: var(--fw-green-light); color: var(--fw-green); }
+
+/* ─── Vérificateur d'email ──────────────────────────────────────────────── */
+.email-checker-result {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.email-verdict {
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 7px;
+  line-height: 1.4;
+}
+
+.email-verdict-ok   { background: var(--fw-green-light); color: var(--fw-green); border-left: 3px solid var(--fw-green); }
+.email-verdict-warn { background: #fff9e6; color: #6b4d00; border-left: 3px solid #f0b429; }
+.email-verdict-bad  { background: var(--fw-red-light); color: var(--fw-red); border-left: 3px solid var(--fw-red); }
+
+[data-theme="dark"] .email-verdict-warn { background: #3a3020; color: #e0c070; }
+
+.email-verdict code {
+  background: rgba(0,0,0,0.1);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: 'Consolas', monospace;
+  font-size: 12px;
+}
+
+.email-suspicions {
+  list-style: none;
+  padding-left: 0;
+  margin-top: -4px;
+}
+
+.email-suspicions li {
+  font-size: 12px;
+  padding: 3px 0 3px 22px;
+  position: relative;
+  color: #6b4d00;
+}
+
+.email-suspicions li::before {
+  content: '•';
+  position: absolute;
+  left: 10px;
+  color: #d4640a;
+  font-weight: bold;
+}
+
+[data-theme="dark"] .email-suspicions li { color: #e0c070; }
+
+/* ─── Convertisseur d'unités ────────────────────────────────────────────── */
+.converter-group {
+  background: var(--fw-bg-soft);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.converter-group summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fw-text);
+  padding: 4px 0;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.converter-group summary::before {
+  content: '▶';
+  font-size: 10px;
+  color: var(--fw-blue);
+  transition: transform 0.15s;
+}
+
+.converter-group[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.converter-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.conv-arrow {
+  font-size: 18px;
+  color: var(--fw-blue);
+  font-weight: bold;
+}
+
+.conv-hint {
+  font-size: 11px;
+  color: var(--fw-text-soft);
+  margin-top: 6px;
+  font-style: italic;
+}
 
 /* ─── Vérification fuite ─────────────────────────────────────────────────── */
 .breach-result {

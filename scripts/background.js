@@ -213,6 +213,18 @@ function setupContextMenu() {
       title: chrome.i18n.getMessage('contextMenuAnalyzeLink'),
       contexts: ['link']
     });
+
+    // Recherche inversée d'image — repérer si une photo est réutilisée ailleurs
+    chrome.contextMenus.create({
+      id: 'reverseImageGoogle',
+      title: 'FaciliWeb : Recherche inversée (Google Images)',
+      contexts: ['image']
+    });
+    chrome.contextMenus.create({
+      id: 'reverseImageLens',
+      title: 'FaciliWeb : Recherche inversée (Google Lens)',
+      contexts: ['image']
+    });
   });
 }
 
@@ -245,6 +257,18 @@ function initDefaultSettings() {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === 'analyzeLinkFaciliWeb' && info.linkUrl) {
     analyzeLinkAndNotify(info.linkUrl, tab.id);
+  }
+  // Recherche inversée via Google Images (méthode classique)
+  if (info.menuItemId === 'reverseImageGoogle' && info.srcUrl) {
+    chrome.tabs.create({
+      url: `https://www.google.com/searchbyimage?image_url=${encodeURIComponent(info.srcUrl)}`
+    });
+  }
+  // Recherche inversée via Google Lens (méthode moderne, plus visuelle)
+  if (info.menuItemId === 'reverseImageLens' && info.srcUrl) {
+    chrome.tabs.create({
+      url: `https://lens.google.com/uploadbyurl?url=${encodeURIComponent(info.srcUrl)}`
+    });
   }
 });
 
